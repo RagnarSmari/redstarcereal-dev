@@ -1,6 +1,14 @@
 /* stylelint-disable selector-list-comma-newline-after */
 {% extends './templates/navbar.html' %}
 {% block content %}
+.nav-scroller{
+  background-color: red;
+}
+
+.nav-scroller a{
+  text-decoration-color: white;
+}
+
 .blog-header {
   line-height: 1;
   border-bottom: 1px solid #e5e5e5;
