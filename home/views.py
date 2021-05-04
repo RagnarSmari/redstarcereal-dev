@@ -6,10 +6,10 @@ from django.http import HttpResponse
 # Create your views here.
 
 def index(request):
-    products = {
-        'product': product.models.Product.all()
+    context = {
+        'products': product.models.Product.all()
     }
-    return render(request, 'base.html', products)
+    return render(request, 'base.html', context)
 
 def home(request):
     return render(request, 'home/home.html')
