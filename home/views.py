@@ -1,15 +1,19 @@
 from django.shortcuts import render
 
 import product.models
-from product import models
+from product.models import Product
 from django.http import HttpResponse
 # Create your views here.
 
 def index(request):
-    context = {
-        'products': product.models.Product.all()
-    }
-    return render(request, 'base.html', context)
+
+    return render(request, 'base.html')
 
 def home(request):
-    return render(request, 'home/home.html')
+
+    context = {
+        'products': Product.objects.all()
+    }
+
+    return render(request, 'home/home.html', context)
+
