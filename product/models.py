@@ -15,6 +15,11 @@ class Product(models.Model):
     stock = models.IntegerField()
     manufacturer_id = models.ForeignKey(Manufacturer, on_delete=models.CASCADE)
     categories = models.ManyToManyField(Category)
+    @property
+    def first_image(self):
+        return ProductGallery.objects.filter(product_id=self.id).first().image
+    
+
 
 class NutritionalInfo(models.Model):
     product_id = models.OneToOneField(Product, on_delete=models.CASCADE, primary_key=True)
@@ -30,6 +35,8 @@ class NutritionalInfo(models.Model):
 class ProductGallery(models.Model):
     product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
     image = models.CharField(max_length=100)
+    def __str__(self):
+        return self.image
 
 
 
