@@ -1,4 +1,34 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h2>Home app</h2>
+    <h2>Products</h2>
+{% for product in products %}
+        <div class="product">
+            <div class="prod-picture">
+                <img src="{{product.image}}"> <!-- dunno how -->
+            </div>
+            <div class="container" name="product-info">
+                <div class="row">
+                    <div class="col" id="prod-name">
+                        <h1>{{ product.name }}</h1>
+                    </div>
+                    <div class="col" id="prod-price">
+                        <p> {{ product.price }}</p>
+                    </div>
+                    <div class="col" id="prod-description">
+                        <p> {{ product.nutrition.calories }}</p> <!-- product weight -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col" id="prod-favorate">
+                        <button>MY FAVORATE ITEM</button>
+                    </div>
+                    <div class="col" id="add-to-cart">
+                        <button>Add to cart</button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    {% endfor %}
 {% endblock  %}
