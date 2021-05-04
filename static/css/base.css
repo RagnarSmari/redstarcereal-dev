@@ -1,0 +1,6 @@
+{% extends './templates/base.html' %}
+{% block content %}
+.body {
+  background-color: lightslategray;
+}
+{% endblock %}
