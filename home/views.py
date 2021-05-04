@@ -13,7 +13,10 @@ def home(request):
 
     context = {
         'products': Product.objects.all()
+
     }
+    for product in context['products']:
+        print(product.first_image)
 
     return render(request, 'home/home.html', context)
 
