@@ -1,12 +1,35 @@
+{% extends './templates/footer.html' %}
+{% block content %}
+#item1{
 
-.flot-containert{
-    border: 3px solid;
+}
+#footerpicture{
+    border-radius: 5%;
+    width: 80%;
+    margin-top: 20%;
+    margin-left: 20%;
+}
+#item2{
+
+}
+#item3{
+ background-color: red;
 }
 
+#item3 p{
+    color: white;
+    font-style: italic;
+    font-size: 1.5rem;
+}
 
-.contact{
-    background-color: lightcoral;
-    width: 50%;
+#rightp{
+    float: right;
+}
+#leftp{
+    float: left;
+}
+#footerLogo{
+    width: 20%;
 }
 
 

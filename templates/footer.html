@@ -1,54 +1,58 @@
 {% load static %}
 <h1>beginning of footer</h1>
- <footer class="float-container">
-    <div class="footer-pic">
-        <img src="static/images/kimunhappy.png" alt="Kim is beeing unhappy">
-    </div>
-    <div class="contact">
-        <p>Questions?</p>
-        <div class="contact-form">
-                </div>	<div class="row">
-      <div class="col-md-6 col-md-offset-3">
-        <div class="well well-sm">
-          <form class="form-horizontal" action="" method="post">
-          <fieldset>
-            <legend class="text-center">Contact us</legend>
-
-            <!-- Name input-->
-            <div class="form-group">
-              <label class="col-md-3 control-label" for="name">Name</label>
-              <div class="col-md-9">
-                <input id="name" name="name" type="text" placeholder="Your name" class="form-control">
-              </div>
-            </div>
-
-            <!-- Email input-->
-            <div class="form-group">
-              <label class="col-md-3 control-label" for="email">Your E-mail</label>
-              <div class="col-md-9">
-                <input id="email" name="email" type="text" placeholder="Your email" class="form-control">
-              </div>
-            </div>
-
-            <!-- Message body -->
-            <div class="form-group">
-              <label class="col-md-3 control-label" for="message">Your message</label>
-              <div class="col-md-9">
-                <textarea class="form-control" id="message" name="message" placeholder="Please enter your message here..." rows="5"></textarea>
-              </div>
-            </div>
-
-            <!-- Form actions -->
-            <div class="form-group">
-              <div class="col-md-12 text-right">
-                <button type="submit" class="btn btn-primary btn-lg">Submit</button>
-              </div>
-            </div>
-          </fieldset>
-          </form>
-        </div>
+<footer>
+  <div class="container">
+    <div class="row c2c2c2">
+      <div class="col-6" id="item1">
+        <img src="static/images/kimunhappy.png" alt="Kim is beeing unhappy" id="footerpicture">
       </div>
-        </div>
+      <div class="col-6" id="item2">
+        <section>
+          <div>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="row">
+                  <div class="col-sm-8 col-sm-offset-2">
+                    <div>
+                      <h2>CONTACT US</h2>
+                    </div>
+                    <form method="post" data-form-title="CONTACT US">
+                      <input type="hidden" data-form-email="true">
+                      <div class="form-group">
+                        <input type="text" class="form-control" name="name" required="" placeholder="Name*" data-form-field="Name">
+                      </div>
+                      <div class="form-group">
+                        <input type="email" class="form-control" name="email" required="" placeholder="Email*" data-form-field="Email">
+                      </div>
+                      <div class="form-group">
+                        <input type="tel" class="form-control" name="phone" placeholder="Phone" data-form-field="Phone">
+                      </div>
+                      <div class="form-group">
+                        <textarea class="form-control" name="message" placeholder="Message*" rows="7" data-form-field="Message"></textarea>
+                      </div>
+                      <div>
+                        <button type="submit" class="btn btn-lg btn-danger">CONTACT US</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
     </div>
+    <div class="row mt-2">
+      <div class="col-12" id="item3">
+        <img src="static/images/redstarcereal.png" alt="Company Logo" id="footerLogo">
+        <p id="leftp">Red Star Cereal</p>
+        <p id="rightp">© 2021. All rights reserved</p>
+      </div>
+    </div>
+
+  </div>
 </footer>
+
+
+
 
