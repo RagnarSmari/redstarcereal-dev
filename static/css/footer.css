@@ -19,17 +19,27 @@
 #item3 p{
     color: white;
     font-style: italic;
-    font-size: 1.5rem;
+    font-size: 1rem;
 }
-
 #rightp{
     float: right;
+    display: inline-block;
 }
 #leftp{
     float: left;
 }
+.footer-logo-image{
+    float: left;
+}
+.company-rights{
+    float: right;
+}
+
+
 #footerLogo{
-    width: 20%;
+    width: 300%;
+    float: left;
+    padding-right: 200%;
 }
 
 
