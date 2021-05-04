@@ -5,12 +5,16 @@ class Manufacturer(models.Model):
     name = models.CharField(max_length=100)
     logo_image = models.CharField(max_length=255)
 
+class Category(models.Model):
+    category = models.CharField(max_length=100)
+
 class Product(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
     price = models.FloatField()
     stock = models.IntegerField()
     manufacturer_id = models.ForeignKey(Manufacturer, on_delete=models.CASCADE)
+    categories = models.ManyToManyField(Category)
 
 class NutritionalInfo(models.Model):
     product_id = models.OneToOneField(Product, on_delete=models.CASCADE, primary_key=True)
