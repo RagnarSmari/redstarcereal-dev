@@ -15,7 +15,7 @@ class Product(models.Model):
     stock = models.IntegerField()
     manufacturer_id = models.ForeignKey(Manufacturer, on_delete=models.CASCADE)
     categories = models.ManyToManyField(Category)
-
+    weight = models.IntegerField()
 
     @property
     def first_image(self):
@@ -36,7 +36,7 @@ class NutritionalInfo(models.Model):
 
 class ProductGallery(models.Model):
     product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
-    image = models.CharField(max_length=100)
+    image = models.CharField(max_length=255)
     def __str__(self):
         return self.image
 

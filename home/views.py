@@ -1,22 +1,19 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 import product.models
-from product.models import Product
+from product.models import Product, ProductGallery, Manufacturer, NutritionalInfo, Category
 from django.http import HttpResponse
 # Create your views here.
 
 def index(request):
-
     return render(request, 'base.html')
 
 def home(request):
-
     context = {
-        'products': Product.objects.all()
-
+        'products': Product.objects.all().order_by('name')
     }
-    for product in context['products']:
-        print(product.first_image)
-
     return render(request, 'home/home.html', context)
+
+
+
 
