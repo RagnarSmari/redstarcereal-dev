@@ -18,7 +18,7 @@ class Product(models.Model):
     weight = models.IntegerField()
     @property
     def price_per_kilo(self):
-        return (price / weight) * 1000
+        return round(((self.price / self.weight) * 1000), 2)
     @property
     def first_image(self):
         return ProductGallery.objects.filter(product_id=self.id).first().image
@@ -34,7 +34,7 @@ class NutritionalInfo(models.Model):
 
     @property
     def calories(self):
-        return (self.carbs + self.protein) * 4 + self.fat * 9
+        return round(((self.carbs + self.protein) * 4 + self.fat * 9), 2)
 
 class ProductGallery(models.Model):
     product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
