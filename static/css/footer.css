@@ -9,6 +9,11 @@
     margin-top: 20%;
     margin-left: 20%;
 }
+
+.col-sm-2 {
+    flex: 0 0 auto;
+    width: 15%;
+}
 #item2{
 
 }
@@ -24,9 +29,11 @@
 #rightp{
     float: right;
     display: inline-block;
+    margin-top: 1rem;
 }
 #leftp{
-    float: left;
+    float: right;
+    margin-top: 1rem;
 }
 .footer-logo-image{
     float: left;
@@ -37,9 +44,9 @@
 
 
 #footerLogo{
-    width: 300%;
+    width: 25%;
     float: left;
-    padding-right: 200%;
+    margin-top: 0.5rem;
 }
 
 
