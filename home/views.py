@@ -5,6 +5,7 @@ from product.models import Product, ProductGallery, Manufacturer, NutritionalInf
 from django.http import HttpResponse
 # Create your views here.
 
+
 def index(request):
     return render(request, 'base.html')
 
