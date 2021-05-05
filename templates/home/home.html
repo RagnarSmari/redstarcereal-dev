@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h2>Products</h2>
-    <div class="products container-fluid">
+    <div class="products container">
         <div class="row top-buffer">
         {% for product in products %}
             {% if forloop.counter0|divisibleby:3 %}
