@@ -14,10 +14,12 @@ def get_product_by_id(request, id):
         'images': [photo.image for photo in gallery],
         'nutrition': get_object_or_404(NutritionalInfo, pk=id),
         'manufacturer': get_object_or_404(Manufacturer, pk = prod.manufacturer_id_id),
-        'categories': [tag.category for tag in tags]
+        'categories': [tag.category for tag in tags],
+        'related_products': Product.objects.all()[:3]
     }
     print(context['product'].name)
     print(context['nutrition'].calories)
     print(context['categories'])
     print(context['manufacturer'].name)
+    print(context['related_products'])
     return render(request, 'products/product_details.html', context)
