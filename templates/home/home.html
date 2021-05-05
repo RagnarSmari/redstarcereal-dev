@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
     <h2>Products</h2>
-    <div class="products container">
-        <div class="row">
+    <div class="products container-fluid">
+        <div class="row top-buffer">
         {% for product in products %}
             {% if forloop.counter0|divisibleby:3 %}
-            </div> <div class="row">
+            </div> <div class="row top-buffer">
             {% endif %}
             {% include 'home/single_product.html' with product=product %}
         {% endfor %}
