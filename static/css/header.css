@@ -1,6 +1,6 @@
 /* stylelint-disable selector-list-comma-newline-after */
-{% extends './templates/navbar.html' %}
-{% block content %}
+/*{% extends './templates/navbar.html' %}
+{% block content %}*/
 .nav-scroller{
   background-color: red;
 }
@@ -35,8 +35,12 @@
 }
 
 
-
-
+.carousel-control-next-icon,
+.carousel-control-prev-icon {
+  background-image: none;
+  color: red;
+  font-size: 20px;
+}
 
 .blog-header {
   line-height: 1;
@@ -130,4 +134,5 @@ h1, h2, h3, h4, h5, h6 {
  * Footer
  */
 
-{% endblock %}
+/*
+{% endblock %}*/
