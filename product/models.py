@@ -18,11 +18,7 @@ class Product(models.Model):
     weight = models.IntegerField()
     @property
     def price_per_kilo(self):
-<<<<<<< HEAD
-        return (self.price / self.weight) * 1000
-=======
         return round(((self.price / self.weight) * 1000), 2)
->>>>>>> 49d66aef09e0e70565d6a9beba368adee583ff6e
     @property
     def first_image(self):
         return ProductGallery.objects.filter(product_id=self.id).first().image
