@@ -1,28 +1,43 @@
-<div class="product border border-black col-3 offset-1">
-    <div class="prod-picture">
-        <img src="{{ product.image }}"> <!-- dunno how -->
-    </div>
-    <div class="container" name="product-info">
+
+
+
+
+
+
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container product col-3" id="single-prod">
+    <div class="shop-default shop-cards shop-tech">
         <div class="row">
-            <div class="col" id="prod-name">
-                <h1>{{ product.name }}</h1>
-            </div>
-            <div class="col" id="prod-price">
-                <p> {{ product.price }}</p>
-            </div>
-            <div class="col" id="prod-description">
-                <p> {{ product.nutrition.calories }}</p> <!-- product weight -->
+            <div class="col-md-12">
+                <div class="block product border z-depth-2-top z-depth-2--hover">
+                    <div class="block-image">
+                            <img src="{{ product.first_image }}" class="img-center img-thumbnail">
+                    </div>
+                    <div class="block-body text-center">
+                        <h3 class="heading heading-5 strong-600 text-capitalize">
+                            {{ product.name }}
+                        </h3>
+                        <p class="product-description">
+                            {{ product.weight }}
+                        </p>
+                        <div class="product-buttons mt-4">
+                            <div class="row align-items-center">
+                                <div class="col-2">
+                                    <button type="button" class="btn-icon" data-toggle="tooltip" data-placement="top" title="" data-original-title="Favorite">
+                                        <i class="fa fa-heart"></i>
+                                    </button>
+                                </div>
+                                <div class="col-8">
+                                    <button type="button" class="btn btn-block btn-primary btn-circle btn-icon-left">
+                                        <i class="fa fa-shopping-cart"></i>Add to cart
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col" id="prod-favorate">
-                <button>MY FAVORATE ITEM</button>
-            </div>
-            <div class="col" id="add-to-cart">
-                <button>Add to cart</button>
-            </div>
-        </div>
-
     </div>
-
 </div>
