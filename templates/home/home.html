@@ -3,10 +3,9 @@
     <div class="products container">
         <div class="row top-buffer">
         {% for product in products %}
-            {% if forloop.counter0|divisibleby:3 %}
-            </div> <div class="row top-buffer">
-            {% endif %}
+            <div class="product top-buffer col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12" id="single-prod">
             {% include 'home/single_product.html' with product=product %}
+            </div>
         {% endfor %}
         </div>
     </div>
