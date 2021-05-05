@@ -16,7 +16,9 @@ class Product(models.Model):
     manufacturer_id = models.ForeignKey(Manufacturer, on_delete=models.CASCADE)
     categories = models.ManyToManyField(Category)
     weight = models.IntegerField()
-
+    @property
+    def price_per_kilo(self):
+        return (price / weight) * 1000
     @property
     def first_image(self):
         return ProductGallery.objects.filter(product_id=self.id).first().image
