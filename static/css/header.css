@@ -41,11 +41,9 @@
 .logo img {
     width: 20%;
 }
-.carousel-control-next-icon,
-.carousel-control-prev-icon {
-  background-image: none;
-  color: red;
-  font-size: 20px;
+.carousel-inner > .item > img {
+  width: 50%;
+  height: 60%;
 }
 
 .blog-header {
