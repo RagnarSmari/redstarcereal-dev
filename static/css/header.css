@@ -18,6 +18,10 @@
     width: 20%;
 }
 
+.navbar-brand{
+  cursor: url('/static/images/kim-mouse.png'), auto;
+}
+
 .nav-scroller a:hover{
   background-color: indianred;
 }
