@@ -2,41 +2,69 @@
 {% load static %}
 {% block content %}
 <main class="container">
-<div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
-  <div class="carousel-inner">
-    <div class="carousel-item active" data-bs-interval="10000">
-      <img src="{% static 'images/kim-jong-un-scaled.jpg' %}" class="d-block w-100" alt="...">
+    <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active" data-bs-interval="10000">
+          <img src="{% static 'images/kim-jong-un-scaled.jpg' %}" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item" data-bs-interval="4000">
+          <img src="{% static 'images/kim-jong-food.jpg' %}" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item" data-bs-interval="4000">
+          <img src="{% static 'images/kimjongun2.jpg' %}" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item" data-bs-interval="4000">
+          <img src="{% static 'images/trumpkim.jpg' %}" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item" data-bs-interval="4000">
+          <img src="{% static 'images/kim-jong-un.jpg' %}" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item" data-bs-interval="4000">
+          <img src="{% static 'images/kim-jong-food.jpg' %}" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+          <img src="{% static 'images/kimjongun2.jpg' %}" class="d-block w-100" alt="...">
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
     </div>
-    <div class="carousel-item" data-bs-interval="4000">
-      <img src="{% static 'images/kim-jong-food.jpg' %}" class="d-block w-100" alt="...">
+
+    <br>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-3">
+            <h4>Categories to display:</h4>
+             <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-primary">Healthy</button>
+                <button type="button" class="btn btn-primary">Sweet</button>
+                <button type="button" class="btn btn-primary">Cerial</button>
+            </div>
+        </div>
+        <div class="col-sm">
+            <h4>Filter by:</h4>
+          <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" 		id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                Popular
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="#">Price &#129043;</a></li>
+                <li><a class="dropdown-item" href="#">Price &#129041;</a></li>
+                <li><a class="dropdown-item" href="#">Popular</a></li>
+              </ul>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="carousel-item" data-bs-interval="4000">
-      <img src="{% static 'images/kimjongun2.jpg' %}" class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item" data-bs-interval="4000">
-      <img src="{% static 'images/trumpkim.jpg' %}" class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item" data-bs-interval="4000">
-      <img src="{% static 'images/kim-jong-un.jpg' %}" class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item" data-bs-interval="4000">
-      <img src="{% static 'images/kim-jong-food.jpg' %}" class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item">
-      <img src="{% static 'images/kimjongun2.jpg' %}" class="d-block w-100" alt="...">
-    </div>
-  </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
-</div>
+
     <div class="products container">
-        <div class="row top-buffer">
+        <div class="row">
         {% for product in products %}
             <div class="product top-buffer col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12" id="single-prod">
             {% include 'home/single_product.html' with product=product %}
