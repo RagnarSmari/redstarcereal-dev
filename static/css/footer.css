@@ -1,8 +1,5 @@
 {% extends './templates/footer.html' %}
 {% block content %}
-#item1{
-
-}
 #footerpicture{
     border-radius: 5%;
     width: 80%;
@@ -31,7 +28,8 @@
     display: inline-block;
     margin-top: 1rem;
 }
-#leftp{
+#logotext{
+    padding-left: 30%;
     margin-top: 1rem;
 }
 .footer-logo-image{
@@ -48,4 +46,7 @@
     margin-top: 0.5rem;
 }
 
+.logo-text{
+    width: 20%;
+}
 
