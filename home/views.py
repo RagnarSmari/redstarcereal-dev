@@ -17,7 +17,7 @@ def home(request):
     return render(request, 'home/home.html', context)
 
 def contact(request):
-    print("contact")
+
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
