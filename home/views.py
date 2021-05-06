@@ -11,8 +11,9 @@ def index(request):
     return render(request, 'base.html')
 
 def home(request):
+    sort_param = 'name'
     context = {
-        'products': Product.objects.all().order_by('name')
+        'products': Product.objects.all().order_by(sort_param)
     }
     return render(request, 'home/home.html', context)
 

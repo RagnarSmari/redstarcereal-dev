@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponseNotFound
 
 import product.models
 from product.models import Product, ProductGallery, Manufacturer, NutritionalInfo, Category
@@ -23,12 +24,18 @@ def get_product_by_id(request, id):
     return render(request, 'products/product_details.html', context)
 
 def manufacturers(request):
-    names = Manufacturer.objects.values_list('name')
-    images = Manufacturer.objects.values_list('logo_image')
-
-
     context = {
         'manufacturers': Manufacturer.objects.all().order_by('id')
     }
-    print(Manufacturer.objects.all().order_by('id'))
     return render(request, 'products/manufacturers.html', context)
+
+def get_product_by_manufacturer(request, id):
+    man_id = id
+    sort_param = 'price'
+    context = {
+        'products': Product.objects.filter(manufacturer_id=man_id).order_by(sort_param)
+    }
+    if len(context['products']) > 0:
+        return render(request, 'home/home.html', context)
+    else:
+        return HttpResponseNotFound("No product found")
