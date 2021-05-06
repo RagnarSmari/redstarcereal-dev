@@ -23,7 +23,6 @@ class Product(models.Model):
     @property
     def first_image(self):
         return ProductGallery.objects.filter(product_id=self.id).first().image
-    
 
 
 class NutritionalInfo(models.Model):
