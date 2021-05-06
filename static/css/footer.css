@@ -1,8 +1,5 @@
 {% extends './templates/footer.html' %}
 {% block content %}
-#item1{
-
-}
 #footerpicture{
     border-radius: 5%;
     width: 80%;
@@ -10,7 +7,7 @@
     margin-left: 20%;
 }
 
-.col-sm-2 {
+.col-2 {
     flex: 0 0 auto;
     width: 15%;
 }
@@ -31,9 +28,12 @@
     display: inline-block;
     margin-top: 1rem;
 }
-#leftp{
-    float: right;
+
+#logotext{
+    float: left;
+    display: inline-block;
     margin-top: 1rem;
+    margin-left: 0.5rem;
 }
 .footer-logo-image{
     float: left;
@@ -44,9 +44,15 @@
 
 
 #footerLogo{
-    width: 25%;
+    width: 8%;
     float: left;
     margin-top: 0.5rem;
+}
+
+@media (min-width: 768px) {
+    #footerLogo {
+        width: 10%;
+    }
 }
 
 
