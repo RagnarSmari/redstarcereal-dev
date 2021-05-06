@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>manufact</h1>
+    {% for manufactor in manufacturers %}
+    <div class="container">
+    <div class="row">
+        <div class="col-xs-6">
+            <h2>{{ manufactor.name }}</h2>
+            <img src="{{ manufactor.logo_image }}" alt="" height="350px". width="450">
+        </div>
+    {% endfor %}
+    </div>
+</div>
+
+    
+    {% comment %}asdfasdfasdfasdfasdfasdf{% endcomment %}
+{% endblock content %}
