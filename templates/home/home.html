@@ -37,26 +37,27 @@
     </div>
 
     <br>
+    <button id="testbutt" onclick="changeDropDown()">CLick ME!!</button>
     <div class="container">
       <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-6 col-md-6 col-8 col-lg-4">
             <h4>Categories to display:</h4>
              <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-primary">Healthy</button>
-                <button type="button" class="btn btn-primary">Sweet</button>
-                <button type="button" class="btn btn-primary">Cerial</button>
+                <button type="button" class="btn btn-secondary">Healthy</button>
+                <button type="button" class="btn btn-secondary">Sweet</button>
+                <button type="button" class="btn btn-secondary">Cereal</button>
             </div>
         </div>
-        <div class="col-sm">
+        <div class="col-sm-4 col-md-5 col-4 col-lg-4">
             <h4>Filter by:</h4>
           <div class="dropdown">
-              <button class="btn btn-secondary dropdown-toggle" type="button" 		id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                 Popular
               </button>
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                 <li><a class="dropdown-item" href="#">Price &#129043;</a></li>
                 <li><a class="dropdown-item" href="#">Price &#129041;</a></li>
-                <li><a class="dropdown-item" href="#">Popular</a></li>
+                <li><a class="dropdown-item" onclick="getDropDownValue()">Popular</a></li>
               </ul>
           </div>
         </div>
