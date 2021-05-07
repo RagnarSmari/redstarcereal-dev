@@ -5,7 +5,7 @@ from django.contrib import messages
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
-
+from user_profile.models import Image
 
 
 # Create your views here.
@@ -22,8 +22,10 @@ def register(request):
 
             username = form.cleaned_data.get('username')
             form.save()
-            messages.success(request,f'Account created for {username}, you are now able to log in')
-            return redirect('home')
+            #image = Image(user=User.objects.get(email=input_email))
+            #image.save()
+            messages.success(request,f'Account created for {username}, please Login.')
+            return redirect('login')
     else:
         form = UserRegisterForm()
     return render(request, 'home/register.html', {'form': form})
