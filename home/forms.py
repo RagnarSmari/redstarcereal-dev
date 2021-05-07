@@ -1,3 +1,4 @@
+import django.db.models
 from django import forms
 
 class ContactForm(forms.Form):
