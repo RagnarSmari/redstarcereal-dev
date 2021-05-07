@@ -10,12 +10,6 @@ from django.contrib import messages
 def index(request):
     return render(request, 'base.html')
 
-def home(request):
-    sort_param = 'name'
-    context = {
-        'products': Product.objects.all().order_by(sort_param)
-    }
-    return render(request, 'home/home.html', context)
 
 def contact(request):
 
