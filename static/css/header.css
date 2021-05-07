@@ -22,8 +22,15 @@
   cursor: url('/static/images/kim-mouse.png'), auto;
 }
 
+.account{
+	color: white;
+	font-size: 40px;
+	padding: 0.25rem !important;
+
+
+}
+
 .button {
-	display: inline-block;
 	margin: 4px 2px;
 	background-color: #444;
 	font-size: 14px;
