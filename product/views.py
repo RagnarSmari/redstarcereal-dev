@@ -7,14 +7,6 @@ from product.models import Product, ProductGallery, Manufacturer, NutritionalInf
 from django.http import HttpResponse
 
 # Create your views here.
-def home(request):
-    if request.GET
-    context = {
-        'products': Product.objects.all().order_by(sort_param)
-    }
-    return render(request, 'home/home.html', context)
-
-
 def get_product_by_id(request, id):
     gallery = ProductGallery.objects.filter(product_id=id)
     tags = Category.objects.filter(product = id)
