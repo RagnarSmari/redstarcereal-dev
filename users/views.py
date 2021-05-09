@@ -6,7 +6,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from user_profile.models import Image
-
+from redstarcereal.mail_service import MailService
 
 # Create your views here.
 def register(request):
@@ -25,6 +25,7 @@ def register(request):
             #image = Image(user=User.objects.get(email=input_email))
             #image.save()
             messages.success(request,f'Account created for {username}, please Login.')
+            MailService(username,input_email).welcome_mail()
             return redirect('login')
     else:
         form = UserRegisterForm()
