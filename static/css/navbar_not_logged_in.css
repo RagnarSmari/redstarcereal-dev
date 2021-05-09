@@ -1,0 +1,43 @@
+body {
+  padding-bottom: 20px;
+}
+
+.navbar {
+  margin-bottom: 20px;
+  padding-left: 18%;
+  padding-right: 18%;
+  color: red;
+}
+
+@media screen and (max-width: 1199px) {
+  #rightnavbar{
+    flex-direction: column-reverse !important;
+    align-items: baseline !important;
+  }
+  }
+
+
+#rightnavbar {
+  align-items: center;
+  padding: 9px;
+}
+
+#loginbt {
+  margin-left: 10px;
+  margin-right: 5px;
+}
+
+.navbar .navbar-expand-xl .navbar-light .bg-light {
+  color: red;
+}
+
+
+
+.navbar-dark .navbar-nav .nav-link {
+  color: white;
+  font-size: 20px;
+}
+
+.navbar-dark .nav-item:hover .nav-link {
+  color: rgb(160, 125, 125);
+}
