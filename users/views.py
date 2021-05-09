@@ -25,7 +25,7 @@ def register(request):
             #image = Image(user=User.objects.get(email=input_email))
             #image.save()
             messages.success(request,f'Account created for {username}, please Login.')
-            MailService(username,input_email).welcome_mail()
+            MailService().welcome_mail(input_email,username)
             return redirect('login')
     else:
         form = UserRegisterForm()
