@@ -35,3 +35,7 @@ body {
 .bi bi-cart {
   font-size: 30px;
 }
+
+#navlogo{
+  cursor: url('/static/images/kim-mouse.png'), auto;
+}

@@ -4,8 +4,8 @@ body {
 
 .navbar {
   margin-bottom: 20px;
-  padding-left: 18%;
-  padding-right: 18%;
+  padding-left: 15%;
+  padding-right: 15%;
   color: red;
 }
 
@@ -40,4 +40,8 @@ body {
 
 .navbar-dark .nav-item:hover .nav-link {
   color: rgb(160, 125, 125);
+}
+
+#navlogo{
+  cursor: url('/static/images/kim-mouse.png'), auto;
 }
