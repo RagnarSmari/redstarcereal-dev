@@ -41,3 +41,7 @@ body {
 .navbar-dark .nav-item:hover .nav-link {
   color: rgb(160, 125, 125);
 }
+
+#navlogo{
+  cursor: url('/static/images/kim-mouse.png'), auto;
+}
