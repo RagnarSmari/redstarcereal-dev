@@ -64,12 +64,10 @@
       </div>
     </div>
 
-    <div class="products container">
-        <div class="row">
+    <div class="products container" id="product-list">
+        <div class="row" id="product-row">
         {% for product in products %}
-            <div class="product top-buffer col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12" id="single-prod">
             {% include 'home/single_product.html' with product=product %}
-            </div>
         {% endfor %}
         </div>
     </div>

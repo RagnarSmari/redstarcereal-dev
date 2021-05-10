@@ -1,36 +1,15 @@
 from django.shortcuts import render, redirect
-from product.models import Product
+from product.models import Product, ProductGallery
 from django.http import HttpResponse
 from .forms import ContactForm
 from django.core.mail import send_mail, BadHeaderError
 from django.contrib import messages
+from django.http import JsonResponse
 # Create your views here.
 def home(request):
-    if 'order_by' in request.GET:
-        sort_param = request.GET['order_by']
-    else:
-        sort_param = 'id'
-    if 'search_param' in request.GET:
-        search = request.GET['search_param']
-        if 'tag' in request.GET:
-            tag = request.GET['tag']
-            context = {
-                'products': Product.objects.filter(name__icontains=search).filter(categories__category__icontains=tag).order_by(sort_param)
-            }
-        else:
-            context = {
-                'products': Product.objects.filter(name__icontains=search).order_by(sort_param)
-            }
-    else:
-        if 'tag' in request.GET:
-            tag = request.GET['tag']
-            context = {
-                'products': Product.objects.filter(categories__category__icontains=tag).order_by(sort_param)
-            }
-        else:
-            context = {
-                'products': Product.objects.all().order_by(sort_param)
-            }
+    context = {
+        'products': Product.objects.all()
+    }
     return render(request, 'home/home.html', context)
 
 
@@ -64,6 +43,33 @@ def contact(request):
 
     form = ContactForm()
     return render(request, 'home/contact.html', {'form':form})
+
+def products(request):
+    if 'order_by' in request.GET:
+        sort_param = request.GET['order_by']
+    else:
+        sort_param = 'id'
+    if 'search_param' in request.GET:
+        search = request.GET['search_param']
+        if 'tag' in request.GET:
+            tag = request.GET['tag']
+            context = list(Product.objects.filter(name__icontains=search).filter(categories__category__icontains=tag).order_by(sort_param).values())
+
+        else:
+            context = list(Product.objects.filter(name__icontains=search).order_by(sort_param).values())
+
+    else:
+        if 'tag' in request.GET:
+            tag = request.GET['tag']
+            context = list(Product.objects.filter(categories__category__icontains=tag).order_by(sort_param).values())
+        else:
+            context = list(Product.objects.all().order_by(sort_param).values())
+
+    for item in context:
+        item['first_image'] = ProductGallery.objects.filter(product_id=item['id']).first().image
+    print(context)
+    return JsonResponse(context, safe=False)
+
 
 
 
