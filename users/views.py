@@ -32,19 +32,3 @@ def register(request):
     return render(request, 'home/register.html', {'form': form})
 
 
-def user_login(request):
-
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request,user)
-            messages.success(request,f'You are now logged in, welcome {username}!')
-            return redirect('home')
-        else:
-            messages.warning(request, f'invalid username or password')
-            return redirect('login')
-    else:
-        form = LoginForm()
-    return render(request, 'home/login.html', {'form': form})
