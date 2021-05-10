@@ -12,6 +12,7 @@ from django.contrib import messages
 # Create your views here.
 @login_required
 def profile_page(request):
+
     if request.method == 'POST':
         user_form = UserUpdateForm(request.POST, instance=request.user)
         profile_form = UpdateProfileForm(request.POST,
