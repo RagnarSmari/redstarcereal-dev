@@ -8,16 +8,19 @@
         <div class="row top-buffer">
             {% for manufacturer in manufacturers %}
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 single-man top-buffer">
-                    <div class="border">
-                        <img src="{{ manufacturer.logo_image }}">
-                        <h3>{{ manufacturer.name }}</h3>
-                    </div>
-
+                    <a href="../manufacturers/{{ manufacturer.id }}">
+                        <div class="border">
+                            <img src="{{ manufacturer.logo_image }}">
+                            <h3>{{ manufacturer.name }}</h3>
+                        </div>
+                    </a>
                 </div>
-
             {% endfor %}
         </div>
-    </div>
+    </div
+>
+
+
 
     
     {% comment %}asdfasdfasdfasdfasdfasdf{% endcomment %}
