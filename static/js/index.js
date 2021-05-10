@@ -24,7 +24,7 @@ $(".dropdown-item").click(function (){
             var newHTML = res.map( d=>{
                 return `
                        <div class="product top-buffer col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 border" id="single-prod">
-                         <a href="../products/${d.id}">
+                         <a href="../products/${d.id}" class="text-decoration-none">
                             <div class="shop-default shop-cards shop-tech">
                                 <div class="row">
                                     <div class="col-md-12">
@@ -37,7 +37,7 @@ $(".dropdown-item").click(function (){
                                                     ${d.name}
                                                 </h3>
                                                 <p class="product-description">
-                                                    {d.weight}g
+                                                    ${d.weight} g
                                                 </p>
                                                 <p class="product-price">${d.price} ISK</p>
                                                 <div class="product-buttons mt-4">
@@ -67,26 +67,23 @@ $(".dropdown-item").click(function (){
     });
 });
 
+// End of filter buttons
 
-// Get request for filter by drop down button
-$(".categories").click(function (){
-    $.ajax({
-        url: "http://localhost:8000/products/1",
-        type: 'GET',
-        success: function (res) {
-            console.log('success!!');
-            alert(res);
-        }
-    })
-})
+// Start of categories buttons
+
+$('.categories').click(function (){
+   $.ajax({
+       url:'',
+       type: 'GET',
+       success: function (res){
+           console.log('Success!!')
+       }
+   })
+});
 
 
-function createNewDiv(){
-    jQuery('<div/>', {
-       "class": 'product top-buffer col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12" id="single-prod',
 
-    });
-};
+// end of categories buttons
 
 
 
