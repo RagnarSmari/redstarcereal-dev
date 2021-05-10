@@ -10,14 +10,16 @@
           <p class="text-secondary">{{ user.email }}</p>
         </div>
         <div>
-		<h1>Profile info</h1>
+            <h1>Profile info</h1>
 
-		<form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-            {{user_form| crispy }}
-            {{ profile_from |crispy }}
-            <button class="btn btn-primary" type="submit">Update Profile</button>
-        </form>
+            <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+                {{user_form| crispy }}
+                {{ profile_from |crispy }}
+                <button class="btn btn-primary" type="submit">Update Profile</button>
+            </form>
+        </div>
+      </div>
     </div>
   <!-- FORM HERE -->
 
