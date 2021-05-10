@@ -1,5 +1,4 @@
-{% extends './templates/footer.html' %}
-{% block content %}
+
 #footerpicture{
     border-radius: 5%;
     width: 80%;
@@ -10,9 +9,6 @@
 .col-2 {
     flex: 0 0 auto;
     width: 15%;
-}
-#item2{
-
 }
 #item3{
  background-color: red;

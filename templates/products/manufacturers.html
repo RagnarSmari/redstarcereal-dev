@@ -1,16 +1,23 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1>manufact</h1>
-    {% for manufactor in manufacturers %}
-    <div class="container">
-    <div class="row">
-        <div class="col-xs-6">
-            <h2>{{ manufactor.name }}</h2>
-            <img src="{{ manufactor.logo_image }}" alt="" height="350px". width="450">
-        </div>
-    {% endfor %}
+    <div id="manufacturers-title">
+        <h1>Manufacturers</h1>
     </div>
-</div>
+
+    <div class="container">
+        <div class="row top-buffer">
+            {% for manufacturer in manufacturers %}
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 single-man top-buffer">
+                    <div class="border">
+                        <img src="{{ manufacturer.logo_image }}">
+                        <h3>{{ manufacturer.name }}</h3>
+                    </div>
+
+                </div>
+
+            {% endfor %}
+        </div>
+    </div>
 
     
     {% comment %}asdfasdfasdfasdfasdfasdf{% endcomment %}
