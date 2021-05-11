@@ -241,7 +241,7 @@ $('#our-searchbar').click(function (event){ // Pick the searchbar
         success: function (res){
             let newHTML = res.map(d => {
                 return `
-                <li><a  id="${d.id}" class="dropdown-item search-keyword" href="">${d.keyword}</a></li>
+                <li id="${d.id}" class="dropdown-item search-keyword">${d.keyword}</li>
                 `
             });
             $('.search-drop-menu').html(newHTML.join('')); // pick the dropdown menu ul tag
@@ -249,16 +249,15 @@ $('#our-searchbar').click(function (event){ // Pick the searchbar
     })
 })
 
+$('.search-drop-menu').on("click",".search-keyword", function (event){
+    let selText = $(this).text();
+    $('#our-searchbar').val(selText);
+    $('#our-searchbar').select();
+});
+
 
 // Change the search history text value to the desired value
 
-$( document ).ready(function() {
-    $('.search-drop-menu li a').on('click', function (e){
-       e.preventDefault();
-       let selText = $(this).text();
-       console.log(selText);
-    });
-});
 
 
 
