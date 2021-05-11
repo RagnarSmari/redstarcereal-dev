@@ -3,7 +3,8 @@ from django.http import HttpResponseNotFound
 from product.models import Product, ProductGallery, Manufacturer, NutritionalInfo, Category
 
 from django.http import HttpResponse, JsonResponse
-
+from user_profile.models import Search
+from django.contrib.auth.models import User
 # Create your views here.
 
 
@@ -57,4 +58,25 @@ def product_filter_and_manufacturer(request, id):
     for item in context:
         item['first_image'] = ProductGallery.objects.filter(product_id=item['id']).first().image
     return JsonResponse(context, safe=False)
+
+def search_products(request):
+    keyword = request.GET['keyword']
+    print(keyword)
+    if request.user.is_authenticated:
+        user = User.objects.get(username=request.user)
+        _s, _created = Search.objects.update_or_create(keyword=keyword, user=user)
+    if 'order_by' in request.GET:
+        sort_param = request.GET['order_by']
+    else:
+        sort_param = 'id'
+    if 'tag' in request.GET:
+        tag = request.GET['tag']
+        context = list(Product.objects.filter(name__icontains=keyword).filter(categories__category__icontains=tag).order_by(sort_param).values())
+    else:
+        context = list(Product.objects.filter(name__icontains=keyword).order_by(sort_param).values())
+
+    for item in context:
+        item['first_image'] = ProductGallery.objects.filter(product_id=item['id']).first().image
+    return JsonResponse(context, safe=False)
+
 

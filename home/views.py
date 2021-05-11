@@ -51,21 +51,11 @@ def products(request):
         sort_param = request.GET['order_by']
     else:
         sort_param = 'id'
-    if 'search_param' in request.GET:
-        search = request.GET['search_param']
-        if 'tag' in request.GET:
-            tag = request.GET['tag']
-            context = list(Product.objects.filter(name__icontains=search).filter(categories__category__icontains=tag).order_by(sort_param).values())
-
-        else:
-            context = list(Product.objects.filter(name__icontains=search).order_by(sort_param).values())
-
+    if 'tag' in request.GET:
+        tag = request.GET['tag']
+        context = list(Product.objects.filter(categories__category__icontains=tag).order_by(sort_param).values())
     else:
-        if 'tag' in request.GET:
-            tag = request.GET['tag']
-            context = list(Product.objects.filter(categories__category__icontains=tag).order_by(sort_param).values())
-        else:
-            context = list(Product.objects.all().order_by(sort_param).values())
+        context = list(Product.objects.all().order_by(sort_param).values())
 
     for item in context:
         item['first_image'] = ProductGallery.objects.filter(product_id=item['id']).first().image

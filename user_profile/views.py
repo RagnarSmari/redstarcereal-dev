@@ -1,7 +1,7 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from .forms import *
-from .models import Image
+from .models import Image, Search
 from django.contrib.auth.models import User
 from .forms import UserUpdateForm, UpdateProfileForm
 from django.contrib.auth.decorators import login_required
@@ -38,3 +38,10 @@ def profile_page(request):
 
 def success(request):
     return HttpResponse('successfully uploaded')
+
+def search_history(request):
+    user = User.objects.get(username=request.user)
+    history = list(Search.objects.filter(user=user).order_by('-timestamp').values('keyword', 'id'))
+    print(history)
+    return JsonResponse(history, safe=False)
+
