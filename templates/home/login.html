@@ -2,13 +2,14 @@
 {% load crispy_forms_tags %}
 {% block content %}
     <div style="margin: 17%;
-    margin-top: 6%;">
-		<h1>Login</h1>
+    margin-top: 6%;" class="border" align="center">
+		<h1 class="font-italic">Login</h1>
 
 		<form method="POST">
         {% csrf_token %}
             {{form | crispy}}
-            <button type="submit">Login In</button>
+            <br>
+            <button type="submit" class="btn btn-secondary">Login In</button>
         </form>
     </div>
     {% comment %}asdfasdfasdfasdfasdfasdf{% endcomment %}

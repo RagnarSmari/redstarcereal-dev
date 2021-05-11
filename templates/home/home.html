@@ -42,9 +42,10 @@
         <div class="col-sm-6 col-md-6 col-8 col-lg-4">
             <h5>Categories to display:</h5>
              <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-secondary categories">Healthy</button>
-                <button type="button" class="btn btn-secondary categories">Sweet</button>
-                <button type="button" class="btn btn-secondary categories">Cereal</button>
+                 <button type="button" class="btn btn-secondary categories">All</button>
+                 {% for category in categories %}
+                     <button type="button" class="btn btn-secondary categories">{{ category.category }}</button>
+                 {% endfor %}
             </div>
         </div>
         <div class="col-sm-4 col-md-5 col-4 col-lg-4">

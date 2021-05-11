@@ -1,15 +1,16 @@
-from django.shortcuts import render, redirect
-from product.models import Product, ProductGallery
-from django.http import HttpResponse
-from .forms import ContactForm
-from django.core.mail import send_mail, BadHeaderError
+from product.models import Product, ProductGallery, Manufacturer, NutritionalInfo, Category
+from django.shortcuts import render
 from django.contrib import messages
 from django.http import JsonResponse
+
 # Create your views here.
+
+
 def home(request):
     context = {
-        'products': Product.objects.all()
-    }
+        'products': Product.objects.all(),
+        'categories': Category.objects.all()
+        }
     return render(request, 'home/home.html', context)
 
 
@@ -18,7 +19,6 @@ def index(request):
 
 
 def contact(request):
-
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
@@ -44,6 +44,7 @@ def contact(request):
     form = ContactForm()
     return render(request, 'home/contact.html', {'form':form})
 
+
 def products(request):
     if 'order_by' in request.GET:
         sort_param = request.GET['order_by']
@@ -67,7 +68,6 @@ def products(request):
 
     for item in context:
         item['first_image'] = ProductGallery.objects.filter(product_id=item['id']).first().image
-    print(context)
     return JsonResponse(context, safe=False)
 
 
