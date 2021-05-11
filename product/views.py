@@ -1,12 +1,12 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseNotFound
-
-import product.models
 from product.models import Product, ProductGallery, Manufacturer, NutritionalInfo, Category
 
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 
 # Create your views here.
+
+
 def get_product_by_id(request, id):
     gallery = ProductGallery.objects.filter(product_id=id)
     tags = Category.objects.filter(product = id)
@@ -33,9 +33,28 @@ def get_product_by_manufacturer(request, id):
     man_id = id
     sort_param = 'price'
     context = {
-        'products': Product.objects.filter(manufacturer_id=man_id).order_by(sort_param)
+        'products': Product.objects.filter(manufacturer_id=man_id).order_by(sort_param),
+        'categories': Category.objects.all()
     }
     if len(context['products']) > 0:
-        return render(request, 'products/single_manufacturer.html', context)
+        return render(request, 'home/home.html', context)
     else:
-        return HttpResponseNotFound("No product found")
+        return HttpResponseNotFound("No products found")
+
+
+def product_filter_and_manufacturer(request, id):
+    man_id = id
+    if 'order_by' in request.GET:
+        sort_param = request.GET['order_by']
+    else:
+        sort_param = 'id'
+    if 'tag' in request.GET:
+        tag = request.GET['tag']
+        context = list(Product.objects.filter(manufacturer_id=man_id).filter(categories__category__icontains=tag).order_by(sort_param).values())
+    else:
+        context = list(Product.objects.filter(manufacturer_id=man_id).order_by(sort_param).values())
+
+    for item in context:
+        item['first_image'] = ProductGallery.objects.filter(product_id=item['id']).first().image
+    return JsonResponse(context, safe=False)
+
