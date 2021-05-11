@@ -259,6 +259,23 @@ $('.search-drop-menu').on("click",".search-keyword", function (event){
 // Change the search history text value to the desired value
 
 
+function addOneToCart (event) {
+
+    let prodId = event.id
+    let amount = 1;
+    let url = 'http://127.0.0.1:8000/orders/cart';
+
+    axios.post(url,{product: prodId, volume: amount})
+
+        .then(function (response){
+            console.log("success");
+        })
+        .catch(function (error){
+
+        });
+
+
+};
 
 
 
