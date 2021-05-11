@@ -21,18 +21,16 @@ def add_to_cart(request):
     if request.method == 'POST':
         print('Bæng')
         if request.user.is_authenticated:
-            print('boom')
-            bod = {}
-            p_id = bod.product_id
+            p_id = Product.objects.get(id=request.body.id)
             u_id = get_user_id(request)
-            amt = bod.amount
+            amt = request.body.amt
             c = Cart(user_id=u_id, product=p_id, amount=amt)
             c.save()
-            messages.success(request, f'{Product.object.get(id=p_id).name} was succsessfuly added to your cart')
-            return HttpResponse.status_code(201)
+
+            #messages.success(request, f'{Product.object.get(id=p_id).name} was succsessfuly added to your cart')
+            return HttpResponse("nice")
         else:
             messages.error(request, 'You need to be logged in to add to cart')
-            print('fokk')
             return render(request, 'home/login.html')
 
 
@@ -43,9 +41,9 @@ def update_cart(request):
 def items_in_cart(request):
     if request.method == 'GET':
         u_id = get_user_id(request)
-        print(u_id)
+
         amount = Cart.objects.filter(user_id=u_id).aggregate(Sum('amount'))['amount__sum']
-        print(amount)
+
         return HttpResponse(amount)
 
 
