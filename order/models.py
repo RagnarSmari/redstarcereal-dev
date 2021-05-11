@@ -1,6 +1,7 @@
 from django.db import models
 from creditcards.models import CardNumberField, CardExpiryField, SecurityCodeField
 from product import models as product_models
+from django.contrib.auth.models import User
 
 
 # Create your models here.
@@ -25,8 +26,19 @@ class Order(models.Model):
     payment_info = models.OneToOneField(PaymentInfo, on_delete=models.CASCADE)
     total_price = models.FloatField()
 
+
 class OrderRow(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     product = models.ForeignKey(product_models.Product, on_delete=models.CASCADE)
     amount = models.IntegerField()
     row_price = models.FloatField()
+
+
+class Cart(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(product_models.Product, on_delete=models.CASCADE)
+    amount = models.IntegerField()
+    @property
+    def price(self):
+        return self.product.price * self.amount
+

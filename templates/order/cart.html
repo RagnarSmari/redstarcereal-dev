@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content%}
+    <h1>Your Cart</h1>
+    <div class="container">
+        <div class="row">
+            {% for item in cart %}
+                <div class="col-12">
+                    <div class="item-name">
+                        <p>Name of some item</p>
+                    </div>
+                    <div class="item-price">
+                        <p>10.99 ISK</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="cart-total">
+                    <p>Total</p>
+                    <p>20200202 ISK</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <button>Continue Shopping</button>
+            </div>
+            <div class="col-6">
+                <button>Proceed to checkout</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                some image here
+                <img>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock content%}

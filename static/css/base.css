@@ -1,7 +1,10 @@
-{% extends './templates/base.html' %}
-{% block content %}
-.body {
-  background-color: lightslategray;
 
+html body {
+    background-color: #ECECEC;
 }
-{% endblock %}
+
+footer{
+    width: 100%;
+    bottom: 0;
+}
+

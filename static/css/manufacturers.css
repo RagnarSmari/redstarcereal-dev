@@ -1,0 +1,19 @@
+#manufacturers-title{
+    text-align: center;
+    text-decoration: underline;
+}
+.single-man img{
+    width: 100%;
+    height: 30rem;
+}
+
+.single-man h3{
+    text-align: center;
+    font-weight: bold;
+    font-style: italic;
+    margin-top: 3%;
+}
+
+.top-buffer{
+    margin-top: 5%;
+}

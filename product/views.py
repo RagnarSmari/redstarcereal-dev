@@ -36,6 +36,6 @@ def get_product_by_manufacturer(request, id):
         'products': Product.objects.filter(manufacturer_id=man_id).order_by(sort_param)
     }
     if len(context['products']) > 0:
-        return render(request, 'home/home.html', context)
+        return render(request, 'products/single_manufacturer.html', context)
     else:
         return HttpResponseNotFound("No product found")
