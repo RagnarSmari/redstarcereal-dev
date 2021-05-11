@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<main class="container">
+    <main class="container">
     <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-inner">
         <div class="carousel-item active" data-bs-interval="10000">
@@ -40,7 +40,7 @@
     <div class="container">
       <div class="row">
         <div class="col-sm-6 col-md-6 col-8 col-lg-4">
-            <h4>Categories to display:</h4>
+            <h5>Categories to display:</h5>
              <div class="btn-group" role="group" aria-label="Basic example">
                 <button type="button" class="btn btn-secondary categories">Healthy</button>
                 <button type="button" class="btn btn-secondary categories">Sweet</button>
@@ -48,7 +48,7 @@
             </div>
         </div>
         <div class="col-sm-4 col-md-5 col-4 col-lg-4">
-            <h4>Filter by:</h4>
+            <h5>Filter by:</h5>
           <div class="dropdown">
               <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                 Name &#129043;
@@ -71,4 +71,5 @@
         {% endfor %}
         </div>
     </div>
+    </main>
 {% endblock %}

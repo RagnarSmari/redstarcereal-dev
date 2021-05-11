@@ -1,22 +1,25 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-    <div class="content-section">
-      <div class="media">
+    <div class="content-section" >
+      <div class="media" style="margin: 17%;
+    margin-top: 6%;">
         <img class="rounded-circle account-img" src="{{ user.image.image.url }}" width="120" height="120">
         <div class="media-body">
           <h2 class="account-heading">{{user.username}}</h2>
           <p class="text-secondary">{{ user.email }}</p>
         </div>
-        <div style="margin:80px">
-		<h1>Profile info</h1>
+        <div>
+            <h1>Profile info</h1>
 
-		<form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-            {{user_form| crispy }}
-            {{ profile_from |crispy }}
-            <button type="submit">Register</button>
-        </form>
+            <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+                {{user_form| crispy }}
+                {{ profile_from |crispy }}
+                <button class="btn btn-primary" type="submit">Update Profile</button>
+            </form>
+        </div>
+      </div>
     </div>
   <!-- FORM HERE -->
 
