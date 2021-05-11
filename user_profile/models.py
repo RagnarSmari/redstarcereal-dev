@@ -9,4 +9,12 @@ class Image(models.Model):
     def __str__(self):
         return f'{self.user.username}\'s profile'
 
+class Search(models.Model):
+    keyword = models.CharField(max_length=255)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ('user', 'keyword',)
+
 
