@@ -1,6 +1,6 @@
 from product.models import Product, ProductGallery, Manufacturer, NutritionalInfo, Category
 from .forms import ContactForm
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.http import JsonResponse
 

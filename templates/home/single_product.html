@@ -1,12 +1,14 @@
 <div class="product top-buffer col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12" id="single-prod">
 
-    <a href="../products/{{product.id}}" class="text-decoration-none">
-        <div class="shop-default shop-cards shop-tech">
+
+        <div class="shop-default shop-cards shop-tech get-id" id="{{ product.id }}">
             <div class="row">
                 <div class="col-md-12">
                     <div class="block product border z-depth-2-top z-depth-2--hover">
                         <div class="block-image">
-                                <img src="{{ product.first_image }}" class="img-center">
+                                <a href="../products/{{product.id}}" class="text-decoration-none">
+                                    <img src="{{ product.first_image }}" class="img-center">
+                                </a>
                         </div>
                         <div class="block-body text-center">
                             <h3 class="heading heading-5 strong-600 text-capitalize">
@@ -17,16 +19,26 @@
                             </p>
                             <p class="product-price">{{ product.price }} ISK</p>
                             <div class="product-buttons mt-4">
+                                <form method="get">
+                                    {% csrf_token %}
                                 <div class="row align-items-center">
                                     <div class="col-2">
                                         <button type="button" class="btn-icon" data-toggle="tooltip" data-placement="top" title="" data-original-title="Favorite">
                                             <i class="fa fa-heart"></i>
                                         </button>
                                     </div>
+                                </form>
                                     <div class="col-8">
-                                        <button type="button" class="btn btn-block btn-primary btn-circle btn-icon-left">
-                                            <i class="fa fa-shopping-cart"></i>Add to cart
-                                        </button>
+                                        {% if user.is_authenticated %}
+                                            <button type="button" class="btn btn-block btn-primary btn-circle btn-icon-left" onclick="addOneToCart(this)" id="{{ product.id }}">
+                                                <i class="fa fa-shopping-cart"></i>Add to cart
+                                            </button>
+                                        {% else %}
+                                            <a href="{% url 'login' %} "><button type="button" class="btn btn-block btn-primary btn-circle btn-icon-left"  id="{{ product.id }}">
+                                                <i class="fa fa-shopping-cart"></i>Add to cart
+                                            </button></a>
+                                        {% endif %}
+
                                     </div>
                                 </div>
                             </div>
@@ -35,7 +47,6 @@
                 </div>
             </div>
         </div>
-    </a>
 </div>
 
 
