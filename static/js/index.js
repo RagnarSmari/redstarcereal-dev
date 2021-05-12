@@ -1,7 +1,9 @@
 // Global variables
 var tagStr = '';
 var orderStr = '';
-const baseUrl = 'localhost:8000';
+const baseUrl = 'http://127.0.0.1:8000';
+
+// functions that run at start
 
 
 // Starting of filter buttons
@@ -86,7 +88,7 @@ $(".sort-dropitem").click(function (){
 
 $('.categories').click(function (){
     let sortParam = $(this).text();
-    let currentURL = window.location.href;
+    let currentURL = baseUrl;
     currentURL = currentURL.replace('#',''); // The # was not helping, we dont know why it appears
     if (currentURL.includes('manufacturers')) { // When doing a get req on manufacturers no / showed up
         currentURL += '/';
@@ -175,7 +177,7 @@ $('.form-control').keypress(function (event){
            filter['tag'] = orderStr.split('=')[1];
        }
        $.ajax({
-           url: 'http://localhost:8000/search',
+           url: baseUrl + '/search',
            type: 'GET',
            data: filter,
            dataType: 'json',
@@ -234,8 +236,9 @@ $('.form-control').keypress(function (event){
 // Get req for search history
 $('#our-searchbar').click(function (event){ // Pick the searchbar
     event.preventDefault();
+
     $.ajax({
-        url: 'http://localhost:8000/history',
+        url: baseUrl + '/history',
         type: 'GET',
         dataType: 'json',
         success: function (res){
@@ -257,29 +260,41 @@ $('.search-drop-menu').on("click",".search-keyword", function (event){
 
 
 // Change the search history text value to the desired value
+// end of search bar
 
-
+// Cart functionality
 function addOneToCart (event) {
 
     let prodId = event.id
     let amount = 1;
-    let url = 'http://127.0.0.1:8000/orders/cart';
+    let url = baseUrl + '/orders/cart';
 
     axios.post(url,{product: prodId, volume: amount})
 
         .then(function (response){
-            console.log("success");
+            getCartNumber()
+
         })
         .catch(function (error){
 
         });
-
-
 };
 
+function getCartNumber(){
+    let url = baseUrl + '/orders/cart/count'
+    axios.get(url)
+        .then(function (res){
+            // Add number to cart html here
+            let cartNumberTag = document.getElementById('cart-number');
+            cartNumberTag.innerText = res.data;
+            console.log(res.data);
+        })
+        .catch(function (err){
+        console.log(err);
+    });
+}
 
-
-// end of search bar
+getCartNumber();
 
 
 
