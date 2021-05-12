@@ -85,7 +85,7 @@ $(".sort-dropitem").click(function (){
 
 $('.categories').click(function (){
     let sortParam = $(this).text();
-    let currentURL = baseUrl;
+    let currentURL = window.location.href;
     currentURL = currentURL.replace('#',''); // The # was not helping, we dont know why it appears
     if (currentURL.includes('manufacturers')) { // When doing a get req on manufacturers no / showed up
         currentURL += '/';
