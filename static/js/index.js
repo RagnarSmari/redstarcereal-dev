@@ -3,9 +3,6 @@ var tagStr = '';
 var orderStr = '';
 const baseUrl = 'http://127.0.0.1:8000';
 
-// functions that run at start
-
-
 // Starting of filter buttons
 
 // Change the value of the dropdownMenu button when
@@ -294,7 +291,6 @@ function getCartNumber(){
     });
 }
 
-getCartNumber();
 
 
 

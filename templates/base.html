@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="{% static 'css/filter_buttons.css'%}">
     <link rel="stylesheet" href="{% static 'css/manufacturers.css' %}">
 </head>
-<body>
+<body onload="getCartNumber()">
 
     {% include 'navbar.html' %}
     {% if messages %}
