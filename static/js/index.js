@@ -255,7 +255,7 @@ $('#our-searchbar').click(function (event){ // Pick the searchbar
 $('.search-drop-menu').on("click",".search-keyword", function (event){
     let selText = $(this).text();
     $('#our-searchbar').val(selText);
-    $('#our-searchbar').select();
+    $('#our-searchbar').focus();
 });
 
 
