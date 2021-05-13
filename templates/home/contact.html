@@ -1,19 +1,26 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
-    <div style="margin: 17%; margin-top: 6%;">
-		<h1>Contact</h1>
-		<h4>Contact us directly if you have any questions</h4>
-		<p>
-			Please write your name, email address and a message below if you have any questions.
-			One of our staff members will be happy to contact you directly and answer your questions as soon as possible.
-		</p>
-		<img src="https://cdn.cnn.com/cnnnext/dam/assets/151210132231-kim-jong-un-phone-super-169.jpg" width="658" height="392" style="float:right; padding-top: 24px;">
-		<form method="POST">
-        {% csrf_token %}
-            {{form | crispy}}
-            <button class="btn btn-danger" type="submit" style="margin-top: 7px;">Submit</button>
-        </form>
+    <div class="container">
+        <h1>Contact</h1>
+        <h4>Contact us directly if you have any questions</h4>
+        <div class="row contact-row">
+            <div class="col-6 border-top">
+                <p class="border-bottom">
+                    Please write your name, email address and a message below if you have any questions.
+                    <br>One of our staff members will be happy to contact you directly and answer your questions as soon as possible.
+                </p>
+
+                <form method="POST">
+                {% csrf_token %}
+                    {{form | crispy}}
+                    <button class="btn btn-danger" type="submit" style="margin-top: 7px;">Submit</button>
+                </form>
+            </div>
+            <div class="col-6 col-xxl-6 col-xl-6 col-lg-6 col-md-4">
+                <img src="https://cdn.cnn.com/cnnnext/dam/assets/151210132231-kim-jong-un-phone-super-169.jpg" id="contact-img">
+            </div>
+        </div>
 
     </div>
 {% endblock content %}

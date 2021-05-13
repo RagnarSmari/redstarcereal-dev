@@ -6,88 +6,139 @@
 
     <div class="card">
         <div class="row">
-            <aside class="col-sm-5 border-right">
-    <article class="gallery-wrap">
-    <div class="img-big-wrap">
-      <div>
-          {% for image in images %}
-            <img src="{{image}}">
-          {% endfor %}
-      </div>
-    </div> <!-- slider-product.// -->
-    </article> <!-- gallery-wrap .end// -->
+            <aside class="col-sm-12 col-md-5 col-lg-5 col-xl-5 col-xxl-5 border-right product-images">
+                <article class="gallery-wrap">
+                <div class="img-big-wrap">
+                    <div id="carouselExampleControls" class="carousel carousel-dark slide" data-bs-ride="carousel" style="max-width: 85%; margin-left: 10%; margin-top: 10%">
+                      <div class="carousel-inner">
+                          {% for image in images %}
+                              {% if forloop.first %}
+                                <div class="carousel-item active">
+                                    <img src="{{ product.first_image }}" class="d-block w-100" alt="...">
+                                </div>
+                              {% else %}
+                                  <div class="carousel-item">
+                                    <img src="{{image}}" class="d-block w-100" alt="...">
+                                  </div>
+                              {% endif %}
+                          {% endfor %}
+                      </div>
+                      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                      </button>
+                      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                      </button>
+                    </div>
+                </div> <!-- slider-product.// -->
+                </article> <!-- gallery-wrap .end// -->
             </aside>
-            <aside class="col-sm-7">
-    <article class="card-body p-5">
-        <h3 class="title mb-3">{{ product.name }}</h3>
+        <aside class="col-sm-12 col-md-7 col-lg-7 col-xl-5 col-xxl-5">
+            <article class="card-body p-5">
+                <h3 class="title mb-3">{{ product.name }}</h3>
 
-    <p class="price-detail-wrap">
-        <span class="price h3 text-warning">
-            <span class="currency">ISK</span><span class="num">
-            {{ product.price }}
-            </span>
-        </span>
-        <span>/per item</span>
-        <span>{{ product.price_per_kilo }}</span>
-    </p> <!-- price-detail-wrap .// -->
-    <dl class="item-property">
-      <dt>Description</dt>
-        <dd><p>
-            {{ product.description }}
-        </p></dd>
-    </dl>
-     <dl class="item-property">
-      <dt>Nutrition</dt>
-        <dd><p>
-            Calories: {{ nutrition.calories }}
-        </p></dd>
-         <dd><p>
-            Fat: {{ nutrition.fat }}
-        </p></dd>
-         <dd><p>
-            Carbs: {{ nutrition.carbs }}
-        </p></dd>
-         <dd><p>
-            of which sugar: {{ nutrition.sugar }}
-        </p></dd>
-         <dd><p>
-            Protein: {{ nutrition.protein }}
-        </p></dd>
-    </dl>
-    <dl class="param param-feature">
-      <dt>Weight</dt>
-      <dd>{{ product.weight }}g</dd>
-    </dl>  <!-- item-property-hor .// -->
-    <dl class="param param-feature">
-      <dt>Manufacturer</dt>
-      <dd>{{ manufacturer.name }}</dd>
-    </dl>  <!-- item-property-hor .// -->
-    <dl class="param param-feature">
-      <dt>Categories</dt>
-      <dd>
-        {% for cat in categories %}
-            <p>{{cat}}</p>
-        {% endfor %}</dd>
-    </dl>  <!-- item-property-hor .// -->
+            <p class="price-detail-wrap">
+                <span class="price h3 text-warning text-body">
+                    <span class="currency">ISK</span><span class="num">
+                    {{ product.price }}
+                    </span>
+                    <br>
+                </span>
+                <span class="text-muted">{{ product.price_per_kilo }} /per kg</span>
+            </p> <!-- price-detail-wrap .// -->
+            <dl class="item-property">
+              <dt>Description</dt>
+                <dd><p>
+                    {{ product.description }}
+                </p></dd>
+            </dl>
+            <dl class="param param-feature d-inline-block">
+                <dt>Weight</dt>
+                <dd>{{ product.weight }}g</dd>
+            </dl>  <!-- item-property-hor .// -->
+            <dl class="param param-feature d-inline-block p-3">
+                <dt>Manufacturer</dt>
+                <dd>{{ manufacturer.name }}</dd>
+            </dl>  <!-- item-property-hor .// -->
+             <dl class="item-property">
+                <table class="table">
+                  <thead>
+                    <tr>
+                        <th scope="col">Nutrition</th>
+                        <th scope="col">Per 100g</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">Calories:</th>
+                      <td>{{ nutrition.calories }}g</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Fat:</th>
+                      <td>{{ nutrition.fat }}g</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Carbs:</th>
+                      <td colspan="2">{{ nutrition.carbs }}g</td>
+                    </tr>
+                    <tr>
+                      <th scope="row" class="text-muted fw-normal">of which sugar:</th>
+                      <td colspan="2">{{ nutrition.sugar }}g</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Protein:</th>
+                      <td colspan="2">{{ nutrition.protein }}g</td>
+                    </tr>
+                  </tbody>
+                </table>
+            </dl>
+            <dl class="param param-feature">
+                <dt>Categories</dt>
+                <ul class="list-group">
+                    {% for cat in categories %}
+                        <li class="list-group-item">{{cat}}</li>
+                    {% endfor %}
+                </ul>
+            </dl>  <!-- item-property-hor .// -->
 
-    <hr>
-        <div class="row">
-            <div class="col-sm-5">
-                <dl class="param param-inline">
-                  <dt>Quantity: </dt>
-                  <dd>
-                    <select class="form-control form-control-sm" style="width:70px;">
-                        <option> 1 </option>
-                        <option> 2 </option>
-                        <option> 3 </option>
-                    </select>
-                  </dd>
-                </dl>  <!-- item-property .// -->
-            </div> <!-- col.// -->
-        </div> <!-- row.// -->
-        <hr>
-        <a href="#" class="btn btn-lg btn-outline-primary text-uppercase"> <i class="fas fa-shopping-cart"></i> Add to cart </a>
-    </article> <!-- card-body.// -->
+            <hr>
+                <div class="row">
+                    <div class="col-12">
+                        <dl class="param param-inline">
+                          <dt>Quantity: </dt>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-xxl-6 col-xl-8 col-lg-6 col-md-10 col-sm-8 col-8">
+                                        <div class="input-group">
+                                            <span class="input-group-btn">
+                                              <button type="button" class="btn btn-default btn-number" disabled="disabled" data-type="minus" data-field="quant[1]">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-lg" viewBox="0 0 16 16">
+                                                  <path d="M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z"/>
+                                                </svg>
+                                              </button>
+                                            </span>
+                                            <input type="text" name="quant[1]" class="form-control input-number" value="1" min="1" max="99">
+                                            <span class="input-group-btn">
+                                               <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quant[1]">
+                                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                                      <path d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1"/>
+                                                  </svg>
+                                               </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </dl>  <!-- item-property .// -->
+                    </div> <!-- col.// -->
+                </div> <!-- row.// -->
+                <hr>
+                <a href="#" class="btn btn-lg btn-outline-primary text-uppercase">
+                    Add to cart
+                </a>
+            </article> <!-- card-body.// -->
             </aside> <!-- col.// -->
         </div> <!-- row.// -->
     </div> <!-- card.// -->
