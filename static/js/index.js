@@ -254,9 +254,8 @@ $('.search-drop-menu').on("click",".search-keyword", function (event){
 // end of search bar
 
 // Cart functionality
-function addOneToCart (event) {
+function addOneToCart (event, amount=1) {
     let prodId = event.id;
-    let amount = 1;
     let url = baseUrl + '/orders/cart';
     axios.post(url, {product: prodId, volume: amount})
         .then(function (response) {
