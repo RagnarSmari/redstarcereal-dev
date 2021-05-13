@@ -12,10 +12,16 @@
         <div>
             <h1>Profile info</h1>
 
-            <form method="POST" enctype="multipart/form-data">
+            <form method="POST" enctype="multipart/form-data" class="w-80">
             {% csrf_token %}
-                {{user_form| crispy }}
-                {{ profile_from |crispy }}
+                <div class="border-top w-50">
+                    {{user_form| crispy }}
+                </div>
+                <br>
+                <div class="border-top border-bottom" style="line-height: 2;">
+                    {{ profile_from |crispy }}
+                </div>
+                <br>
                 <button class="btn btn-secondary" type="submit">Update Profile</button>
             </form>
         </div>
