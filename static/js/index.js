@@ -129,9 +129,6 @@ $('.categories').click(function (){
                                                 <div class="product-buttons mt-4">
                                                     <div class="row align-items-center">
                                                         <div class="col-2">
-                                                            <button type="button" class="btn-icon" data-toggle="tooltip" data-placement="top" title="" data-original-title="Favorite">
-                                                                <i class="fa fa-heart"></i>
-                                                            </button>
                                                         </div>
                                                         <div class="col-8">
                                                             <button type="button" class="btn btn-block btn-primary btn-circle btn-icon-left">
@@ -201,9 +198,6 @@ $('.form-control').keypress(function (event){
                                                     <div class="product-buttons mt-4">
                                                         <div class="row align-items-center">
                                                             <div class="col-2">
-                                                                <button type="button" class="btn-icon" data-toggle="tooltip" data-placement="top" title="" data-original-title="Favorite">
-                                                                    <i class="fa fa-heart"></i>
-                                                                </button>
                                                             </div>
                                                             <div class="col-8">
                                                                 <button type="button" class="btn btn-block btn-primary btn-circle btn-icon-left">
