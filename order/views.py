@@ -143,7 +143,7 @@ def contact_step(request):
             user = User.objects.get(username=request.user)
             contact.user = user
             contact.save()
-            return redirect('order/payment.html')
+            return redirect('payment')
 
 
 
@@ -160,6 +160,7 @@ def payment(request):
             user = User.objects.get(username=request.user)
             payment.user = user
             payment.save()
+            return redirect('review')
 
 
 
@@ -201,7 +202,13 @@ def cart_to_order(user):
     for item in cart:
         price = Product.objects.get(pk=item.product.id).price * item.amount
         row = OrderRow(order=order_model, product=item.product, amount=item.amount, row_price=price)
+
+        item.product.stock -= item.amount
+        item.product.save()
+
         row.save()
+
+
         Cart.objects.get(pk=item.id).delete()
 
     contact_model.archived = True
@@ -212,5 +219,10 @@ def cart_to_order(user):
     return True
 
 
-
+#TODO ef hann er með contact info þá uppfæra það. og auto filla það þegar hann fer í contact info, sama með payment
+#TODO setja hlekki til að fara fram og til baka
+#TODO ef cart er uppfræt þá þarf user að fara á byrjunarstig
+#TODO Tjékka hvort allt sé til áður en þú setur í cart B-KRAFA
+#TODO ef notandi er ekki með contact info þá fær hann 403 þegar hann fer í payment
+#TODO senda póst á notanda þegar orderið er komið í gegn!
 
