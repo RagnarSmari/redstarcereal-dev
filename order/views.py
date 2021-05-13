@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 
 import order.models
-from .models import Cart, ContactInfo, PaymentInfo
+from .models import Cart, ContactInfo, PaymentInfo, Order, OrderRow
 from product.models import Product
 from django.http import HttpResponse
 from django.contrib import messages
@@ -175,3 +175,42 @@ def review(request):
         'total': get_user_total(u.id)
     }
     return render(request, 'order/review_order.html', context)
+
+@csrf_exempt
+def confirm(request):
+    if request.method == 'POST':
+        u = User.objects.get(username=request.user)
+        if Cart.objects.filter(user_id=u.id) and ContactInfo.objects.filter(archived=False).get(user=u):
+            if PaymentInfo.objects.filter(archived=False).get(user=u):
+                if cart_to_order(u):
+                    return HttpResponse(status=201)
+    return HttpResponse(status=402)
+def gratz(request):
+    return render(request, 'order/order_complete.html')
+
+
+def cart_to_order(user):
+    contact_model = ContactInfo.objects.filter(user=user, archived=False).get()
+    payment_model = PaymentInfo.objects.filter(user=user, archived=False).get()
+    total = get_user_total(user.id)
+    order_model = Order(contact_info=contact_model, payment_info=payment_model, total_price=total)
+
+    order_model.save()
+    cart = Cart.objects.filter(user_id=user.id)
+
+    for item in cart:
+        price = Product.objects.get(pk=item.product.id).price * item.amount
+        row = OrderRow(order=order_model, product=item.product, amount=item.amount, row_price=price)
+        row.save()
+        Cart.objects.get(pk=item.id).delete()
+
+    contact_model.archived = True
+    contact_model.save()
+    payment_model.archived = True
+    payment_model.save()
+
+    return True
+
+
+
+

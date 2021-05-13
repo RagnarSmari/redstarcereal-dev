@@ -418,7 +418,18 @@ $(".input-number").keydown(function (e) {
 
 
 
+function confirmOrder () {
 
+    let url = baseUrl + '/orders/confirm'
+    axios.post(url)
+        .then(function (res){
+            window.location.href = baseUrl + '/orders/gratz';
+
+        })
+        .catch(function (err){
+            console.log(err);
+    });
+};
 
 
 
