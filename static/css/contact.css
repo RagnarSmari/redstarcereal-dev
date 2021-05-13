@@ -1,0 +1,50 @@
+#contact-img{
+    width: 70%;
+    height: 50%;
+    bottom: 0;
+
+}
+
+
+/*  xxl */
+@media (max-width: 576px) {
+    #contact-img{
+        display: none;
+    }
+}
+/*  md */
+@media (max-width: 768px) {
+    #contact-img{
+        display: none;
+    }
+}
+@media (min-width: 768px) {
+    #contact-img{
+        margin-top: 110%;
+    }
+}
+/*  lg */
+@media (min-width: 992px) {
+    #contact-img{
+        margin-top: 54%;
+    }
+}
+
+@media (max-width: 992px) {
+    #contact-img{
+        margin-left: 10%;
+        width: 150%;
+    }
+}
+
+@media (min-width: 1200px) {
+    #contact-img{
+        margin-top: 41%;
+    }
+}
+
+@media (min-width: 1400px) {
+    #contact-img{
+        margin-top: 33%;
+    }
+}

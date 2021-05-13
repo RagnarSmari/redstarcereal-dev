@@ -21,32 +21,9 @@
     <link rel="stylesheet" href="{% static 'css/product_details.css' %}">
     <link rel="stylesheet" href="{% static 'css/filter_buttons.css'%}">
     <link rel="stylesheet" href="{% static 'css/manufacturers.css' %}">
-
-    <script>
-        var user = '{{ request.user }}';
-        function getCookie(name) {
-            let cookieArr = document.cookie.split(";");
-            for (let i=0; i<cookieArr.length;i++) {
-                let cookiePair = cookieArr[i].split(";");
-                if (name==cookiePair[0].trim()) {
-                    return decodeURIComponent(cookiePair[1]);
-                }
-            }
-            return null;
-        }
-        console.log('User:', user);
-        var cart = JSON.parse(getCookie('cart'));
-        if (cart == undefined) {
-            cart = {};
-            console.log('Cart created!');
-            document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/";
-        }
-        console.log('Cart:', cart);
-    </script>
-
+    <link rel="stylesheet" href="{% static 'css/contact.css' %}">
 </head>
 <body onload="getCartNumber()">
-
     {% include 'navbar.html' %}
     {% if messages %}
         {% for message in messages %}
