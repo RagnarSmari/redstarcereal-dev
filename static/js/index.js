@@ -255,23 +255,17 @@ $('.search-drop-menu').on("click",".search-keyword", function (event){
 
 // Cart functionality
 function addOneToCart (event) {
-    let prodId = event.id
+    let prodId = event.id;
     let amount = 1;
     let url = baseUrl + '/orders/cart';
-    if (user == 'anonymousUser') {
-        axios.post(url, {product: prodId, volume: amount})
+    axios.post(url, {product: prodId, volume: amount})
+        .then(function (response) {
+            getCartNumber()
 
-            .then(function (response) {
-                getCartNumber()
+        })
+        .catch(function (error) {
 
-            })
-            .catch(function (error) {
-
-            });
-    } else {
-        addCookieItem(prodId, amount);
-        getCartNumber();
-    }
+        });
 }
 
 function getCartNumber(){
