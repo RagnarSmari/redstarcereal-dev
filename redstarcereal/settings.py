@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'product.apps.ProductConfig',
     'crispy_forms',
     'order.apps.OrderConfig',
-    'user_profile.apps.UserProfileConfig'
+    'user_profile.apps.UserProfileConfig',
+    'django_countries',
 ]
 
 MIDDLEWARE = [
