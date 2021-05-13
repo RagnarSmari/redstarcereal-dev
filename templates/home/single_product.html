@@ -29,16 +29,9 @@
                                     </div>
                                 </form>
                                     <div class="col-8">
-                                        {% if user.is_authenticated %}
-                                            <button type="button" class="btn btn-block btn-primary btn-circle btn-icon-left" onclick="addOneToCart(this)" id="{{ product.id }}">
-                                                <i class="fa fa-shopping-cart"></i>Add to cart
-                                            </button>
-                                        {% else %}
-                                            <a href="{% url 'login' %} "><button type="button" class="btn btn-block btn-primary btn-circle btn-icon-left"  id="{{ product.id }}">
-                                                <i class="fa fa-shopping-cart"></i>Add to cart
-                                            </button></a>
-                                        {% endif %}
-
+                                        <button type="button" class="btn btn-block btn-primary btn-circle btn-icon-left" onclick="addOneToCart(this)" id="{{ product.id }}">
+                                            <i class="fa fa-shopping-cart"></i>Add to cart
+                                        </button>
                                     </div>
                                 </div>
                             </div>

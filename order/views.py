@@ -20,9 +20,6 @@ def get_user_id(request):
 
 @csrf_exempt
 def add_to_cart(request):
-
-
-
     if request.method == 'POST':
 
         decodeing = request.body.decode('utf-8')
@@ -58,11 +55,20 @@ def update_cart(request):
 
 def items_in_cart(request):
     if request.method == 'GET':
-        u_id = get_user_id(request)
+        if request.user.is_authenticated:
+            u_id = get_user_id(request)
 
-        amount = Cart.objects.filter(user_id=u_id).aggregate(Sum('amount'))['amount__sum']
+            amount = Cart.objects.filter(user_id=u_id).aggregate(Sum('amount'))['amount__sum']
 
-        return HttpResponse(amount)
+            return HttpResponse(amount)
+        else:
+            print('Hæ þú ert í cart count')
+            cart = json.loads(request.COOKIES['cart'])
+            total = 0
+            for _item, amt in cart.items():
+                total += amt
+            print(total)
+            return HttpResponse(total)
 
 
 

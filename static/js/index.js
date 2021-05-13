@@ -261,34 +261,52 @@ $('.search-drop-menu').on("click",".search-keyword", function (event){
 
 // Cart functionality
 function addOneToCart (event) {
-
     let prodId = event.id
     let amount = 1;
     let url = baseUrl + '/orders/cart';
+    if (user == 'anonymousUser') {
+        axios.post(url, {product: prodId, volume: amount})
 
-    axios.post(url,{product: prodId, volume: amount})
+            .then(function (response) {
+                getCartNumber()
 
-        .then(function (response){
-            getCartNumber()
+            })
+            .catch(function (error) {
 
-        })
-        .catch(function (error){
-
-        });
-};
+            });
+    } else {
+        addCookieItem(prodId, amount);
+        getCartNumber();
+    }
+}
 
 function getCartNumber(){
     let url = baseUrl + '/orders/cart/count'
-    axios.get(url)
-        .then(function (res){
-            // Add number to cart html here
-            let cartNumberTag = document.getElementById('cart-number');
-            cartNumberTag.innerText = res.data;
-            console.log(res.data);
-        })
-        .catch(function (err){
+     axios.get(url)
+    .then(function (res){
+        // Add number to cart html here
+        let cartNumberTag = document.getElementById('cart-number');
+        cartNumberTag.innerText = res.data;
+        console.log(res.data);
+    })
+    .catch(function (err){
         console.log(err);
     });
+}
+
+
+function addCookieItem(productID, amount) {
+    console.log('User is not authenticated...');
+    if (cart[productID] == undefined) {
+        cart[productID] = amount;
+    }else {
+        cart[productID] += amount;
+    }
+    if (cart[productID] <= 0) {
+        delete cart[productID];
+    }
+    console.log('Cart:', cart);
+    document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/";
 }
 
 
