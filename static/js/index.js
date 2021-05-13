@@ -272,8 +272,10 @@ function getCartNumber(){
     let url = baseUrl + '/orders/cart/count'
     axios.get(url)
         .then(function (res){
+            console.log(res.data);
             // Add number to cart html here
             let cartNumberTag = document.getElementById('cart-number');
+            console.log(cartNumberTag.id);
             cartNumberTag.innerText = res.data;
 
         })
@@ -317,22 +319,28 @@ function getCartTotal(){
     //let productId = event.id
     //axios.delete(url, {id: productId})
 
+function confirmOrder () {
 
-function addCookieItem(productID, amount) {
-    console.log('User is not authenticated...');
-    if (cart[productID] == undefined) {
-        cart[productID] = amount;
-    }else {
-        cart[productID] += amount;
-    }
-    if (cart[productID] <= 0) {
-        delete cart[productID];
-    }
-    console.log('Cart:', cart);
-    document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/";
+    let url = baseUrl + '/orders/confirm'
+    axios.post(url)
+        .then(function (res){
+            window.location.href = baseUrl + '/orders/gratz';
+
+        })
+        .catch(function (err){
+            console.log(err);
+    });
+};
+
+
+
+function AddManyToCart(event){
+    // Get the number from the quantity input field
+    // Add this product to cart with this much quantity
+    let amount = document.getElementById('product-quantity').value;
+    amount = parseInt(amount);
+    addOneToCart(event, amount);
 }
-
-
 
 // Quantity functionality
 
@@ -411,19 +419,6 @@ $(".input-number").keydown(function (e) {
 
 
 
-
-function confirmOrder () {
-
-    let url = baseUrl + '/orders/confirm'
-    axios.post(url)
-        .then(function (res){
-            window.location.href = baseUrl + '/orders/gratz';
-
-        })
-        .catch(function (err){
-            console.log(err);
-    });
-};
 
 
 
