@@ -38,9 +38,14 @@ class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(product_models.Product, on_delete=models.CASCADE)
     amount = models.IntegerField()
+
     @property
     def price(self):
         return self.product.price * self.amount
+
+    @property
+    def name(self):
+        return product_models.Product.objects.get(id=self.product).name
 
     class Meta:
         unique_together = ['user', 'product',]

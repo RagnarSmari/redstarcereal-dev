@@ -2,16 +2,22 @@
 
 {% block content%}
     <h1>Your Cart</h1>
-    <div class="container">
+    <div class="container" >
         <div class="row">
             {% for item in cart %}
-                <div class="col-12">
+                <div class="col-12" id="row{{ item.product.id }}">
                     <div class="item-name">
-                        <p>Name of some item</p>
+                        <p>name: {{ item.product.name }}</p>
+                    </div>
+                    <div>
+                        <p>amount: {{ item.amount }}</p>
                     </div>
                     <div class="item-price">
-                        <p>10.99 ISK</p>
+                        <p>price: {{ item.price }}</p>
                     </div>
+                    <button type="button" class="btn btn-block btn-primary btn-circle btn-icon-left" onclick="deleteFromCart(this)" id="{{ item.product.id }}">
+                        <p>Delete</p>
+                    </button>
                 </div>
             {% endfor %}
         </div>
@@ -19,16 +25,16 @@
             <div class="col-12">
                 <div class="cart-total">
                     <p>Total</p>
-                    <p>20200202 ISK</p>
+                    <p id="cart-total">{{ total }}</p>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-6">
-                <button>Continue Shopping</button>
+                <button onclick="window.location.href='/home/'">Continue Shopping</button>
             </div>
             <div class="col-6">
-                <button>Proceed to checkout</button>
+                <button >Proceed to checkout</button>
             </div>
         </div>
         <div class="row">
