@@ -2,13 +2,15 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 
 import order.models
-from .models import Cart
+from .models import Cart, ContactInfo, PaymentInfo
 from product.models import Product
 from django.http import HttpResponse
 from django.contrib import messages
 from django.db.models import Sum
 from django.views.decorators.csrf import csrf_exempt
 import json
+from .forms import ContactInfoForm, PaymentForm
+from django_countries.fields import CountryField
 
 
 # Create your views here.
@@ -131,4 +133,45 @@ def get_user_total(u_id):
     return total
 
 
+def contact_step(request):
 
+
+    if request.method == 'POST':
+        form = ContactInfoForm(request.POST)
+        if form.is_valid():
+            contact = form.save(commit=False)
+            user = User.objects.get(username=request.user)
+            contact.user = user
+            contact.save()
+            return redirect('order/payment.html')
+
+
+
+
+    form = ContactInfoForm()
+    return render(request, 'order/contact_information.html', {'form': form})
+
+
+def payment(request):
+    if request.method == 'POST':
+        form = PaymentForm(request.POST)
+        if form.is_valid():
+            payment = form.save(commit=False)
+            user = User.objects.get(username=request.user)
+            payment.user = user
+            payment.save()
+
+
+
+    form  = PaymentForm()
+    return render(request,'order/payment.html', {'form': form})
+
+def review(request):
+    u = User.objects.get(username=request.user)
+    context = {
+        'customer': ContactInfo.objects.filter(archived=False).get(user=u),
+        'payment': PaymentInfo.objects.filter(archived=False).get(user=u),
+        'cart': Cart.objects.filter(user=u),
+        'total': get_user_total(u.id)
+    }
+    return render(request, 'order/review_order.html', context)
