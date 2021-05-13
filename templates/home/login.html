@@ -3,15 +3,38 @@
 {% block content %}
     <div style="margin: 17%;
     margin-top: 6%; margin-bottom: 6%;" class="border" align="center">
-		<h1 class="font-italic">Login</h1>
+        <h1 class="font-italic">Login</h1> <br>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 text-center">
+                    <center>
+                        <form method="POST" class=" col-sm-12 w-50">
+                            {% csrf_token %}
+                                {{form | crispy}}
+                                <br>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                        <a href="/password_reset" style="float: left;"> Reset your password</a>
+                                    </div>
+                                    <div class="col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                                        <button type="submit" class="btn btn-secondary float-right w-50">Log In</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </center>
 
-		<form method="POST">
-        {% csrf_token %}
-            {{form | crispy}}
-            <br>
-            <button type="submit" class="btn btn-secondary">Log In</button>
-        </form>
-        <img src="https://cdn.vox-cdn.com/thumbor/QXK3zfM4dZ5f_s6y1_0Uj9IFiwk=/1400x1400/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/18317433/1152948615.jpg.jpg" width="700" height="500" style="padding-top: 50px; padding-bottom: 50px;">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                     <img src="https://www.abc.net.au/news/image/8465442-3x2-940x627.jpg" class="img-fluid" style="padding-top: 50px; padding-bottom: 50px;">
+                </div>
+            </div>
+        </div>
+
+
 
     </div>
     {% comment %}asdfasdfasdfasdfasdfasdf{% endcomment %}

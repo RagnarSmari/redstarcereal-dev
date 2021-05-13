@@ -23,12 +23,9 @@
                                     {% csrf_token %}
                                 <div class="row align-items-center">
                                     <div class="col-2">
-                                        <button type="button" class="btn-icon" data-toggle="tooltip" data-placement="top" title="" data-original-title="Favorite">
-                                            <i class="fa fa-heart"></i>
-                                        </button>
                                     </div>
                                 </form>
-                                    <div class="col-8">
+                                    <div class="col-12" align="center">
                                         {% if user.is_authenticated %}
                                             <button type="button" class="btn btn-block btn-primary btn-circle btn-icon-left" onclick="addOneToCart(this)" id="{{ product.id }}">
                                                 <i class="fa fa-shopping-cart">Add to cart</i>

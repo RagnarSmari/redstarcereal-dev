@@ -78,8 +78,11 @@
           </li>
         </ul>
         <div class="d-flex ms-auto mb-2 mb-xl-0" id="rightnavbar">
-        <form class="searchbar">
-          <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+        <form class="searchbar dropdown">
+            <input id="our-searchbar" class="form-control" type="text" placeholder="Search" aria-label="Search" data-bs-toggle="dropdown">
+            <ul class="search-drop-menu dropdown-menu" aria-labelledby="our-searchbar">
+
+            </ul>
         </form>
         <ul class="navbar-nav">
         <button type="button" onclick="window.location.href='/home/login'" class="btn btn-primary" id ="loginbt">Log In</button>
