@@ -102,7 +102,10 @@ def items_in_cart(request):
         if request.user.is_authenticated:
             u_id = get_user_id(request)
             amount = Cart.objects.filter(user_id=u_id).aggregate(Sum('amount'))['amount__sum']
-            return HttpResponse(amount)
+            if amount != None:
+                return HttpResponse(amount)
+            else:
+                return HttpResponse('')
 
         else:
             return HttpResponse('')
@@ -184,8 +187,6 @@ def contact_step(request):
         })
         return render(request, 'order/contact_information.html', {'form': form})
 
-
-
     form = ContactInfoForm()
     return render(request, 'order/contact_information.html', {'form': form})
 
@@ -196,23 +197,9 @@ def payment(request):
 
     id = get_user_id(request)
 
-    if not ContactInfo.objects.filter(user_id=id, archived=False):
-        return HttpResponseForbidden()
-
-    if PaymentInfo.objects.filter(user_id=id, archived=False):
-        payment = PaymentInfo.objects.filter(user_id=id, archived=False).get()
-        form = PaymentForm(initial={
-            'card_holder': payment.card_holder,
-            'cc_number': payment.cc_number,
-            'cc_expiry': payment.cc_expiry,
-            
-        })
-        return render(request,'order/payment.html', {'form': form})
-
-
     if request.method == 'POST':
-        if PaymentInfo.objects.filter(user_id=id, archived=False):
 
+        if PaymentInfo.objects.filter(user_id=id, archived=False):
             payment = PaymentInfo.objects.filter(user_id=id, archived=False).get()
 
             form = PaymentForm(request.POST, instance=payment)
@@ -227,8 +214,22 @@ def payment(request):
             payment.save()
             return redirect('review')
 
-    form  = PaymentForm()
-    return render(request,'order/payment.html', {'form': form})
+    if not ContactInfo.objects.filter(user_id=id, archived=False):
+        return HttpResponseForbidden()
+
+    if PaymentInfo.objects.filter(user_id=id, archived=False):
+        payment = PaymentInfo.objects.filter(user_id=id, archived=False).get()
+        form = PaymentForm(initial={
+            'card_holder': payment.card_holder,
+            'cc_number': payment.cc_number,
+            'cc_expiry': payment.cc_expiry,
+            'cc_code': payment.cc_code
+        })
+        return render(request,'order/payment.html', {'form': form})
+
+    form = PaymentForm()
+
+    return render(request, 'order/payment.html', {'form': form})
 
 
 
@@ -308,13 +309,4 @@ def reset_order(req):
     if PaymentInfo.objects.filter(user_id=id, archived=False):
         p_row = PaymentInfo.objects.filter(user_id=id, archived=False).get()
         p_row.delete()
-
-
-
-
-#TODO setja hlekki til að fara fram og til baka
-
-#TODO Tjékka hvort allt sé til áður en þú setur í cart B-KRAFA
-
-
 

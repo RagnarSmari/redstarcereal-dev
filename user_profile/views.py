@@ -9,7 +9,7 @@ from django.contrib import messages
 
 
 # Create your views here.
-@login_required
+
 def profile_page(request):
 
     if request.method == 'POST':
@@ -23,6 +23,9 @@ def profile_page(request):
             messages.success(request,f'Your account has been updated')
             return redirect('profile')
     else:
+        if not request.user.is_authenticated:
+            messages.warning(request, ' you need to be logged in to view that!')
+            return redirect('login')
         user_form = UserUpdateForm(instance=request.user)
         profile_form = UpdateProfileForm(instance=request.user.image)
 
@@ -31,8 +34,6 @@ def profile_page(request):
         'user_form': user_form,
         'profile_from': profile_form
     }
-
-
     return render(request, 'home/profile_page.html', context)
 
 
