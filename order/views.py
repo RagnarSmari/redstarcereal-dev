@@ -103,7 +103,7 @@ def items_in_cart(request):
             u_id = get_user_id(request)
 
             amount = Cart.objects.filter(user_id=u_id).aggregate(Sum('amount'))['amount__sum']
-            print("say whay")
+
             return HttpResponse(amount)
 
 
@@ -195,23 +195,9 @@ def payment(request):
 
     id = get_user_id(request)
 
-    if not ContactInfo.objects.filter(user_id=id, archived=False):
-        return HttpResponseForbidden()
-
-    if PaymentInfo.objects.filter(user_id=id, archived=False):
-        payment = PaymentInfo.objects.filter(user_id=id, archived=False).get()
-        form = PaymentForm(initial={
-            'card_holder': payment.card_holder,
-            'cc_number': payment.cc_number,
-            'cc_expiry': payment.cc_expiry,
-            
-        })
-        return render(request,'order/payment.html', {'form': form})
-
-
     if request.method == 'POST':
-        if PaymentInfo.objects.filter(user_id=id, archived=False):
 
+        if PaymentInfo.objects.filter(user_id=id, archived=False):
             payment = PaymentInfo.objects.filter(user_id=id, archived=False).get()
 
             form = PaymentForm(request.POST, instance=payment)
@@ -225,6 +211,22 @@ def payment(request):
             payment.user = user
             payment.save()
             return redirect('review')
+
+    if not ContactInfo.objects.filter(user_id=id, archived=False):
+        return HttpResponseForbidden()
+
+    if PaymentInfo.objects.filter(user_id=id, archived=False):
+        payment = PaymentInfo.objects.filter(user_id=id, archived=False).get()
+        form = PaymentForm(initial={
+            'card_holder': payment.card_holder,
+            'cc_number': payment.cc_number,
+            'cc_expiry': payment.cc_expiry,
+            'cc_code': payment.cc_code
+        })
+        return render(request,'order/payment.html', {'form': form})
+
+
+
 
     form  = PaymentForm()
     return render(request,'order/payment.html', {'form': form})
