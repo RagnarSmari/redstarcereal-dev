@@ -495,22 +495,4 @@ function deleteOneFromCart(ev){
 
 
 
-function deleteFromCart(event) {
-    // Get the div, and remove it
-    let row = document.getElementById("product" + event.id)
-    row.remove()
-    axios.post(baseUrl +'/orders/cart/remove',{id: event.id})
-        .then(function (res){
-            getCartNumber()
-            getCartTotal()
-
-        })
-        .catch(function(err){
-           console.log(err);
-        });
-
-}
-
-
-
 
