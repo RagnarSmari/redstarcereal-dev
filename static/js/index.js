@@ -377,28 +377,22 @@ $(".prod-details-amount").keydown(function (e) {
     });
 
 
-
-
-
-
-
-
 // functionality for plus and minus in cart
 
 function incrementQuantity(ev){ // increment the item in cart by one
-    let parentDiv = ev.parentNode.parentNode;
-    let currentAmount = parentDiv.querySelector('p').innerHTML;
+    let parentDiv = ev.parentNode;
+    let currentAmount = parentDiv.querySelector('span').innerHTML;
     let productPrice = parentDiv.id;
     let currentPrice = document.getElementById('current-item-price' + ev.id).innerHTML;
     let cartTotal = document.getElementById('cart-total').innerText;
-    let maxValue = parentDiv.querySelector('p').getAttribute('max');
+    let maxValue = parentDiv.querySelector('span').getAttribute('max');
 
     // Increment the html tag by 1
-    parentDiv.querySelector('p').innerHTML = (parseInt(currentAmount) + 1).toString();
-    currentAmount = parentDiv.querySelector('p').innerHTML
+    parentDiv.querySelector('span').innerHTML = (parseInt(currentAmount) + 1).toString();
+    currentAmount = parentDiv.querySelector('span').innerHTML
 
     if(parseInt(currentAmount) > parseInt(maxValue)){ // maximum value
-        parentDiv.querySelector('p').innerHTML = maxValue.toString()
+        parentDiv.querySelector('span').innerHTML = maxValue.toString()
         alert('Sorry the maximum value was reached')
         return;
     }
@@ -418,19 +412,21 @@ function incrementQuantity(ev){ // increment the item in cart by one
 }
 
 function decrementQuantity(ev){ // decrement the item in cart by one
-    let parentDiv = ev.parentNode.parentNode;
-    let currentAmount = parentDiv.querySelector('p').innerHTML;
+    let parentDiv = ev.parentNode;
+    let currentAmount = parentDiv.querySelector('span').innerHTML;
     let productPrice = parentDiv.id;
     let currentPrice = document.getElementById('current-item-price' + ev.id).innerHTML;
     let cartTotal = document.getElementById('cart-total').innerText;
-    let minValue = parentDiv.querySelector('p').getAttribute('min');
+    let minValue = parentDiv.querySelector('span').getAttribute('min');
 
 
 
     // Decrement the html tag by 1
-    parentDiv.querySelector('p').innerHTML = (parseInt(currentAmount) - 1).toString();
-    currentAmount = parentDiv.querySelector('p').innerHTML
+    parentDiv.querySelector('span').innerHTML = (parseInt(currentAmount) - 1).toString();
+    currentAmount = parentDiv.querySelector('span').innerHTML
 
+    // Delete one from cart
+    deleteOneFromCart(ev);
     if(parseInt(currentAmount) < parseInt(minValue)){ // minimum value value
         deleteFromCart(ev);
         return;
@@ -446,17 +442,12 @@ function decrementQuantity(ev){ // decrement the item in cart by one
     document.getElementById('cart-total').innerText = updatedCartTotal + ' isk'
 }
 
-
 function deleteOneFromCart(event){
     // Get the number from the quantity input field
     // Add this product to cart with this much quantity
     let amount = -1;
     addOneToCart(event, amount);
 }
-
-
-
-
 
 
 
