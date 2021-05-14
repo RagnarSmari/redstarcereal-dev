@@ -2,12 +2,20 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    <h1>Paying Information</h1>
-    <form method="post">
-        {% csrf_token %}
-            {{ form | crispy }}
-            <button>Make purchase</button>
-    </form>
-    <img src="">
-
+    <div class="container text-align-center">
+        <div class="row">
+            <h1>Paying Information</h1>
+        </div>
+        <div class="row border w-50 m-top-5">
+            <div class="col-12">
+                <form method="post" class="border-top">
+                {% csrf_token %}
+                    {{ form | crispy }}
+                    <br>
+                    <button class="btn btn-secondary">Make purchase</button>
+                </form>
+                <img src="">
+            </div>
+        </div>
+    </div>
 {% endblock content%}

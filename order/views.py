@@ -186,6 +186,7 @@ def confirm(request):
                 if cart_to_order(u):
                     return HttpResponse(status=201)
     return HttpResponse(status=402)
+
 def gratz(request):
     return render(request, 'order/order_complete.html')
 
