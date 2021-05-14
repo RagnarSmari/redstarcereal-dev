@@ -170,7 +170,7 @@ function addOneToCart (event, amount=1) {
     axios.post(url, {product: prodId, volume: amount})
         .then(function (response) {
 
-            getCartTotal();
+            //getCartTotal();
             getCartNumber();
 
         })
@@ -203,6 +203,7 @@ function deleteFromCart(event) {
     axios.post(baseUrl +'/orders/cart/remove',{id: event.id})
         .then(function (res){
             getCartNumber()
+            getCartTotal()
 
         })
         .catch(function(err){
@@ -218,7 +219,7 @@ function getCartTotal(){
             // Add number to cart html here
             console.log(res.data);
             let cartTotal = document.getElementById('cart-total');
-            cartTotal.innerText = res.data + " ISK";
+            cartTotal.innerText = res.data;
 
         })
         .catch(function (err){
@@ -353,11 +354,11 @@ function incrementQuantity(ev){ // increment the item in cart by one
     addOneToCart(ev);
 
     // Increment the price of the item by 1 product
-    let updatedPrice = parseInt(currentPrice) + parseInt(productPrice) + ' isk';
+    let updatedPrice = parseInt(currentPrice) + parseInt(productPrice) + ' ISK';
     document.getElementById('current-item-price' + ev.id).innerHTML = updatedPrice;
 
     let updatedCartTotal = parseInt(cartTotal) + parseInt(productPrice);
-    document.getElementById('cart-total').innerText = updatedCartTotal + ' isk'
+    document.getElementById('cart-total').innerText = updatedCartTotal + ' ISK'
 
 
 }
@@ -381,15 +382,15 @@ function decrementQuantity(ev){ // decrement the item in cart by one
     if(parseInt(currentAmount) < parseInt(minValue)){ // minimum value value
         deleteFromCart(ev);
         let updatedCartTotal = parseInt(cartTotal) - parseInt(productPrice);
-        document.getElementById('cart-total').innerText = updatedCartTotal + ' isk'
+        document.getElementById('cart-total').innerText = updatedCartTotal + ' ISK'
         return;
     } else {
 
         deleteOneFromCart(ev);
-        let updatedPrice = parseInt(currentPrice) - parseInt(productPrice) + ' isk';
+        let updatedPrice = parseInt(currentPrice) - parseInt(productPrice) + ' ISK';
         document.getElementById('current-item-price' + ev.id).innerHTML = updatedPrice;
         let updatedCartTotal = parseInt(cartTotal) - parseInt(productPrice);
-        document.getElementById('cart-total').innerText = updatedCartTotal + ' isk'
+        document.getElementById('cart-total').innerText = updatedCartTotal + ' ISK'
         return;
     }
 

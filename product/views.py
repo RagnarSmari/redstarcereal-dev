@@ -94,15 +94,19 @@ def review_product(request, product_id):
 
     if request.method == 'POST':
         u_id = User.objects.get(username=request.user)
-        review_form = ReviewForm(request.POST)
-        if review_form.is_valid():
 
-            if Review.objects.get(user_id=u_id, product_id=product_id):
-                info = Review.objects.get(user_id=u_id, product_id=product_id)
-                form = ReviewForm(request.POST, instance=info)
+
+
+        if Review.objects.filter(user_id=u_id, product_id=product_id):
+            info = Review.objects.get(user_id=u_id, product_id=product_id)
+            form = ReviewForm(request.POST, instance=info)
+            if form.is_valid():
                 form.save()
+                messages.success(request, 'Your review has been updated')
                 return redirect('home')
-            else:
+        else:
+            review_form = ReviewForm(request.POST)
+            if review_form.is_valid():
                 rev = review_form.save(commit=False)
                 rev.product_id = product_id
                 rev.user_id = User.objects.get(username=request.user).id
@@ -111,13 +115,13 @@ def review_product(request, product_id):
                 return redirect('home')
 
     else:
-        print("hey")
+
         if not request.user.is_authenticated:
             messages.warning(request, 'You need to be logged in to make a review')
             return redirect('login')
 
         u_id = User.objects.get(username=request.user)
-        if Review.objects.get(user_id=u_id, product_id=product_id):
+        if Review.objects.filter(user_id=u_id, product_id=product_id):
             rev = Review.objects.get(user_id=u_id, product_id=product_id)
             review_form = ReviewForm(initial={
                 'title': rev.title,
