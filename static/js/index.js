@@ -219,7 +219,9 @@ function addOneToCart (event, amount=1) {
     let url = baseUrl + '/orders/cart';
     axios.post(url, {product: prodId, volume: amount})
         .then(function (response) {
-            getCartNumber()
+
+            getCartTotal();
+            getCartNumber();
 
         })
         .catch(function (error) {
@@ -251,7 +253,7 @@ function deleteFromCart(event) {
     axios.post(baseUrl +'/orders/cart/remove',{id: event.id})
         .then(function (res){
             getCartNumber()
-            getCartTotal()
+
         })
         .catch(function(err){
            console.log(err);
@@ -266,7 +268,7 @@ function getCartTotal(){
             // Add number to cart html here
             console.log(res.data);
             let cartTotal = document.getElementById('cart-total');
-            cartTotal.innerText = res.data;
+            cartTotal.innerText = res.data + " ISK";
 
         })
         .catch(function (err){
@@ -413,6 +415,7 @@ function incrementQuantity(ev){ // increment the item in cart by one
 function decrementQuantity(ev){ // decrement the item in cart by one
     let parentDiv = ev.parentNode;
     let currentAmount = parentDiv.querySelector('span').innerHTML;
+    console.log(currentAmount);
     let productPrice = parentDiv.id;
     let currentPrice = document.getElementById('current-item-price' + ev.id).innerHTML;
     let cartTotal = document.getElementById('cart-total').innerText;
@@ -427,23 +430,27 @@ function decrementQuantity(ev){ // decrement the item in cart by one
     // Delete one from cart
     if(parseInt(currentAmount) < parseInt(minValue)){ // minimum value value
         deleteFromCart(ev);
+        let updatedCartTotal = parseInt(cartTotal) - parseInt(productPrice);
+        document.getElementById('cart-total').innerText = updatedCartTotal + ' isk'
         return;
     } else {
+
         deleteOneFromCart(ev);
+        let updatedPrice = parseInt(currentPrice) - parseInt(productPrice) + ' isk';
+        document.getElementById('current-item-price' + ev.id).innerHTML = updatedPrice;
+        let updatedCartTotal = parseInt(cartTotal) - parseInt(productPrice);
+        document.getElementById('cart-total').innerText = updatedCartTotal + ' isk'
         return;
     }
-    // Increment the price of the item by 1 product
-    let updatedPrice = parseInt(currentPrice) - parseInt(productPrice) + ' isk';
-    document.getElementById('current-item-price' + ev.id).innerHTML = updatedPrice;
 
-    let updatedCartTotal = parseInt(cartTotal) - parseInt(productPrice);
-    document.getElementById('cart-total').innerText = updatedCartTotal + ' isk'
+
 }
 
 function deleteOneFromCart(event){
     // Get the number from the quantity input field
     // Add this product to cart with this much quantity
     let amount = -1;
+
     addOneToCart(event, amount);
 }
 
