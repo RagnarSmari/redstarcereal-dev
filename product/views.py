@@ -1,10 +1,12 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseNotFound
-from product.models import Product, ProductGallery, Manufacturer, NutritionalInfo, Category
-
+from product.models import *
+from .forms import ReviewForm
 from django.http import HttpResponse, JsonResponse
 from user_profile.models import Search
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 # Create your views here.
 
 
@@ -19,7 +21,8 @@ def get_product_by_id(request, id):
         'nutrition': get_object_or_404(NutritionalInfo, pk=id),
         'manufacturer': get_object_or_404(Manufacturer, pk = prod.manufacturer_id_id),
         'categories': [tag.category for tag in tags],
-        'related_products': Product.objects.all()[:3]
+        'related_products': Product.objects.all()[:3],
+        'reviews': Review.objects.filter(product_id=prod.id).order_by('-last_modified')
     }
 
     return render(request, 'products/product_details.html', context)
@@ -77,6 +80,27 @@ def search_products(request):
 
     for item in context:
         item['first_image'] = ProductGallery.objects.filter(product_id=item['id']).first().image
-    return JsonResponse(context, safe=False)
+    return JsonResponse(context, safe=False)\
+
+@login_required
+def review_product(request, product_id):
+        if request.method == 'POST':
+            review_form = ReviewForm(request.POST)
+            if review_form.is_valid():
+                rev = review_form.save(commit=False)
+                rev.product_id = product_id
+                rev.user_id = User.objects.get(username=request.user).id
+                print(rev)
+                rev.save()
+                messages.success(request, 'Your review has been added')
+                return redirect('home')
+        else:
+            review_form = ReviewForm()
+
+        context = {
+            'review_form': review_form
+        }
+
+        return render(request, 'products/review.html', context)
 
 
