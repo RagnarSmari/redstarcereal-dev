@@ -4,7 +4,8 @@
     <div class="content-section" >
 
         <div>
-            <h1>Profile info</h1>
+            <h1>Review Product</h1>
+            <h3>{{ product.name }}</h3>
 
             <form method="POST" enctype="multipart/form-data" class="w-80">
             {% csrf_token %}
@@ -12,7 +13,7 @@
                     {{review_form| crispy }}
                 </div>
                 <br>
-                <button class="btn btn-secondary" type="submit">Update Profile</button>
+                <button class="btn btn-secondary" type="submit"><i class="material-icons left">star</i>Review</button>
             </form>
         </div>
     </div>

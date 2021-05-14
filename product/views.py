@@ -98,7 +98,8 @@ def review_product(request, product_id):
             review_form = ReviewForm()
 
         context = {
-            'review_form': review_form
+            'review_form': review_form,
+            'product': Product.objects.get(pk=product_id)
         }
 
         return render(request, 'products/review.html', context)

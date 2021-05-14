@@ -47,7 +47,74 @@
                     <br>
                 </span>
                 <span class="text-muted">{{ product.price_per_kilo }} /per kg</span>
-            </p> <!-- price-detail-wrap .// -->
+
+            </p> <!-- rating wrap .// -->
+            {% if product.rating != None %}
+            <p class="rating-wrap">
+                <span class="price h3 text-warning text-body">
+                <p>{{ product.rating }} ({{ product.rating_count }})</p>
+
+                {% if product.rating >= 4.5 %}
+
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+
+                {% elif product.rating >= 3.5 %}
+
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star"></span>
+
+                {% elif product.rating >= 2.5 %}
+
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+
+                {% elif product.rating >= 1.5 %}
+
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+
+
+                {% elif product.rating >= 0.5 %}
+
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+
+
+                {% else %}
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+
+                {% endif %}
+
+                    <br>
+            </p> <!-- rating wrap .// -->
+
+            {% else %}
+                <p>This product has not been rated yet</p>
+
+            {% endif %}
+
+                <a href="{{ product.id }}/review"><button class="btn btn-secondary" type="submit"><i class="material-icons left">star</i>Review</button></a>
+
             <dl class="item-property">
               <dt>Description</dt>
                 <dd><p>

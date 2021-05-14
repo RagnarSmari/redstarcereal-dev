@@ -285,17 +285,17 @@ function getCartNumber(){
 
 
 function deleteFromCart(event) {
-
+    // Get the div, and remove it
+    let row = document.getElementById("product" + event.id)
+    row.remove()
     axios.post(baseUrl +'/orders/cart/remove',{id: event.id})
         .then(function (res){
-            let row = document.getElementById("row" + event.id)
-            row.remove()
             getCartNumber()
             getCartTotal()
 
         })
         .catch(function(err){
-           console.log(error)
+           console.log(err);
         });
 
 }
@@ -426,24 +426,62 @@ $(".prod-details-amount").keydown(function (e) {
 // functionality for plus and minus in cart
 
 function incrementQuantity(ev){ // increment the item in cart by one
+    let parentDiv = ev.parentNode.parentNode;
+    let currentAmount = parentDiv.querySelector('p').innerHTML;
+    let productPrice = parentDiv.id;
+    let currentPrice = document.getElementById('current-item-price' + ev.id).innerHTML;
+    let cartTotal = document.getElementById('cart-total').innerText;
+    let maxValue = parentDiv.querySelector('p').getAttribute('max');
 
-    // Increment the p tag value by one
-    let p_tag = document.getElementById('current-quantity-cart');
-    let currentAmount = p_tag.innerHTML;
-    let currentItemPrice = p_tag.parentElement.id;
-    currentAmount = parseInt(currentAmount) + 1;
-    p_tag.innerHTML = currentAmount.toString();
-    // addOne to cart
+    // Increment the html tag by 1
+    parentDiv.querySelector('p').innerHTML = (parseInt(currentAmount) + 1).toString();
+    currentAmount = parentDiv.querySelector('p').innerHTML
+
+    if(parseInt(currentAmount) > parseInt(maxValue)){ // maximum value
+        parentDiv.querySelector('p').innerHTML = maxValue.toString()
+        alert('Sorry the maximum value was reached')
+        return;
+    }
+
+    // Check if the html tag has reached it max value or not, if so then throw alert and back out of the process
+
     addOneToCart(ev);
-    // update the price
-     let currPrice = document.getElementById('current-item-price');
 
+    // Increment the price of the item by 1 product
+    let updatedPrice = parseInt(currentPrice) + parseInt(productPrice) + ' isk';
+    document.getElementById('current-item-price' + ev.id).innerHTML = updatedPrice;
+
+    let updatedCartTotal = parseInt(cartTotal) + parseInt(productPrice);
+    document.getElementById('cart-total').innerText = updatedCartTotal + ' isk'
 
 
 }
 
 function decrementQuantity(ev){ // decrement the item in cart by one
+    let parentDiv = ev.parentNode.parentNode;
+    let currentAmount = parentDiv.querySelector('p').innerHTML;
+    let productPrice = parentDiv.id;
+    let currentPrice = document.getElementById('current-item-price' + ev.id).innerHTML;
+    let cartTotal = document.getElementById('cart-total').innerText;
+    let minValue = parentDiv.querySelector('p').getAttribute('min');
 
+
+
+    // Decrement the html tag by 1
+    parentDiv.querySelector('p').innerHTML = (parseInt(currentAmount) - 1).toString();
+    currentAmount = parentDiv.querySelector('p').innerHTML
+
+    if(parseInt(currentAmount) < parseInt(minValue)){ // minimum value value
+        deleteFromCart(ev);
+        return;
+    }
+
+    // Increment the price of the item by 1 product
+    let updatedPrice = parseInt(currentPrice) - parseInt(productPrice) + ' isk';
+    document.getElementById('current-item-price' + ev.id).innerHTML = updatedPrice;
+
+    let updatedCartTotal = parseInt(cartTotal) - parseInt(productPrice);
+    document.getElementById('cart-total').innerText = updatedCartTotal + ' isk'
 }
 
 

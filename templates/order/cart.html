@@ -10,11 +10,12 @@
                 <th scope="col">Item Name</th>
               <th scope="col">Quantity</th>
               <th scope="col">Price</th>
+                <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
               {% for item in cart %}
-            <tr>
+            <tr id="product{{ item.product.id }}">
             <td><img src="{{ item.product.first_image }}" style="width: 150px"/></td>
               <td>{{ item.product.name }}</td>
                 <td>
@@ -23,16 +24,16 @@
                             <div class="col-xxl-6 col-xl-8 col-lg-6 col-md-10 col-sm-8 col-8">
                                 <div id="{{ item.product.price }}" class="input-group">
                                     <span class="input-group-btn">
-                                      <button id="product-quantity" type="button" class="btn btn-default btn-number cart-quantity" data-type="minus" data-field="quant[1]" onclick="decrementQuantity(this)">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-lg" viewBox="0 0 16 16">
+                                      <button id="{{ item.product.id }}" type="button" class="btn btn-default btn-number cart-quantity" data-type="minus" data-field="quant[1]" onclick="decrementQuantity(this)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" fill="currentColor" class="bi bi-dash-lg" viewBox="0 0 16 16">
                                           <path d="M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z"/>
                                         </svg>
                                       </button>
                                     </span>
-                                    <p id="current-quantity-cart" name="quant[1]" class="product-amount-cart p-3" value="{{ item.amount }}" min="1" max="{{ item.product.stock }}">{{ item.amount }}</p>
+                                    <p name="quant[1]" class="product-amount-cart p-3" value="{{ item.amount }}" min="1" max="{{ item.product.stock }}">{{ item.amount }}</p>
                                     <span class="input-group-btn">
                                        <button id="{{ item.product.id }}" type="button" class="btn btn-default btn-number cart-quantity" data-type="plus" data-field="quant[1]" onclick="incrementQuantity(this)">
-                                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
                                               <path d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1"/>
                                           </svg>
                                        </button>
@@ -42,15 +43,20 @@
                         </div>
                     </div>
                 </td>
-              <td id="current-item-price">{{ item.price }} isk</td>
+              <td id="current-item-price{{ item.product.id }}">{{ item.price }} isk</td>
+            <td>
+                 <button type="button" class="btn btn-block btn-primary btn-circle btn-icon-left" onclick="deleteFromCart(this)" id="{{ item.product.id }}">
+                        <p>Delete</p>
+                 </button>
+            </td>
             </tr>
             <tr>
                {% endfor %}
             <tr>
                  <td></td>
               <td></td>
-              <td></td>
-              <td><p style="font-weight: bold;">Total</p>{{ total }} isk</td>
+              <td> <p style="font-weight: bold;">Total</p></td>
+              <td id="cart-total">{{ total }} isk</td>
             </tr>
           </tbody>
         </table>
