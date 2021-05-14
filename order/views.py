@@ -34,10 +34,13 @@ def add_to_cart(request):
             u_id = get_user_id(request)
             amt = body['volume']
 
-            if Cart.objects.filter(user_id=u_id, product_id = p_id):
+            if Cart.objects.filter(user_id=u_id, product_id=p_id):
                 row = Cart.objects.filter(user_id=u_id, product_id=p_id).get()
                 row.amount += amt
-                row.save()
+                if row.amount <= 0:
+                    row.delete()
+                else:
+                    row.save()
             else:
                 c = Cart(user_id=u_id, product_id=p_id, amount=amt)
                 c.save()
