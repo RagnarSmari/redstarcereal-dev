@@ -17,6 +17,8 @@ from django_countries.fields import CountryField
 # Create your views here.
 
 
+#  Here we implement order views, tha name of the functions say it all
+
 def get_user_id(request):
     return User.objects.get(username=request.user).id
 
@@ -215,7 +217,8 @@ def payment(request):
             return redirect('review')
 
     if not ContactInfo.objects.filter(user_id=id, archived=False):
-        return HttpResponseForbidden()
+        messages.warning(request, 'This is not allowed, please finish your order first')
+        return redirect('view_cart')
 
     if PaymentInfo.objects.filter(user_id=id, archived=False):
         payment = PaymentInfo.objects.filter(user_id=id, archived=False).get()
