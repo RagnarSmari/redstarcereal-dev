@@ -114,7 +114,7 @@ function templateString(d) {
 }
 
 // Search bar
-$('.form-control').keypress(function (event){
+$('#our-searchbar').keypress(function (event){
    if (event.keyCode == 13){
        event.preventDefault();
        let keyword = $(this).val();
