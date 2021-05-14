@@ -344,7 +344,7 @@ function AddManyToCart(event){
 // Quantity functionality
 
 
-$('.btn-number').click(function(e){
+$('.prod-details-incr').click(function(e){
     e.preventDefault();
 
     fieldName = $(this).attr('data-field');
@@ -375,10 +375,10 @@ $('.btn-number').click(function(e){
         input.val(0);
     }
 });
-$('.input-number').focusin(function(){
+$('.prod-details-amount').focusin(function(){
    $(this).data('oldValue', $(this).val());
 });
-$('.input-number').change(function() {
+$('.prod-details-amount').change(function() {
 
     minValue =  parseInt($(this).attr('min'));
     maxValue =  parseInt($(this).attr('max'));
@@ -400,7 +400,7 @@ $('.input-number').change(function() {
 
 
 });
-$(".input-number").keydown(function (e) {
+$(".prod-details-amount").keydown(function (e) {
         // Allow: backspace, delete, tab, escape, enter and .
         if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
              // Allow: Ctrl+A
@@ -415,6 +415,39 @@ $(".input-number").keydown(function (e) {
             e.preventDefault();
         }
     });
+
+
+
+
+
+
+
+
+// functionality for plus and minus in cart
+
+function incrementQuantity(ev){ // increment the item in cart by one
+
+    // Increment the p tag value by one
+    let p_tag = document.getElementById('current-quantity-cart');
+    let currentAmount = p_tag.innerHTML;
+    let currentItemPrice = p_tag.parentElement.id;
+    currentAmount = parseInt(currentAmount) + 1;
+    p_tag.innerHTML = currentAmount.toString();
+    // addOne to cart
+    addOneToCart(ev);
+    // update the price
+     let currPrice = document.getElementById('current-item-price');
+
+
+
+}
+
+function decrementQuantity(ev){ // decrement the item in cart by one
+
+}
+
+
+
 
 
 
