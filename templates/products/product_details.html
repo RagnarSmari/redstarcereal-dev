@@ -138,6 +138,16 @@
                 <a id="{{ product.id }}" href="#" class="btn btn-lg btn-outline-primary text-uppercase" onclick="AddManyToCart(this)">
                     Add to cart
                 </a>
+
+                <div class="review-container">
+                    {% for review in reviews %}
+                        <div class="review">
+                            <h3>{{ review.title }}</h3>
+                            <p>Rating: {{ review.rating }}</p>
+                            <p>Review: {{ review.review }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
             </article> <!-- card-body.// -->
             </aside> <!-- col.// -->
         </div> <!-- row.// -->
