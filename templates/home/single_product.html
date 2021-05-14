@@ -18,6 +18,7 @@
                                 {{ product.weight }}g
                             </p>
                             <p class="product-price">{{ product.price }} ISK</p>
+                            <p class="rating">Rating: {{ product.rating }} stars ({{ product.rating_count }} reviews)</p>
                             <div class="product-buttons mt-4">
                                 <form method="get">
                                     {% csrf_token %}
