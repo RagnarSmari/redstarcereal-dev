@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="content-section" >
+
+        <div>
+            <h1>Review Product</h1>
+            <h3>{{ product.name }}</h3>
+
+            <form method="POST" enctype="multipart/form-data" class="w-80">
+            {% csrf_token %}
+                <div class="border-top w-50">
+                    {{review_form| crispy }}
+                </div>
+                <br>
+                <button class="btn btn-secondary" type="submit"><i class="material-icons left">star</i>Review</button>
+            </form>
+        </div>
+    </div>
+
+
+{% endblock content %}

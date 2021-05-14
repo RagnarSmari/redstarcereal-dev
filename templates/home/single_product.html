@@ -18,6 +18,69 @@
                                 {{ product.weight }}g
                             </p>
                             <p class="product-price">{{ product.price }} ISK</p>
+                            {% if product.rating != None %}
+                            <p class="rating-wrap">
+                                <span class="price h3 text-warning text-body">
+
+                                {% if product.rating >= 4.5 %}
+
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+
+                                {% elif product.rating >= 3.5 %}
+
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star"></span>
+
+                                {% elif product.rating >= 2.5 %}
+
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+
+                                {% elif product.rating >= 1.5 %}
+
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+
+
+                                {% elif product.rating >= 0.5 %}
+
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+
+
+                                {% else %}
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+
+                                {% endif %}
+
+                                            <span>{{ product.rating }} ({{ product.rating_count }})</span>
+                                        <br>
+                            </p> <!-- rating wrap .// -->
+
+                            {% else %}
+                                <p class="font-italic">This product has not been rated yet</p>
+
+                            {% endif %}
                             <div class="product-buttons mt-4">
                                 <form method="get">
                                     {% csrf_token %}

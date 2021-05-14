@@ -285,17 +285,17 @@ function getCartNumber(){
 
 
 function deleteFromCart(event) {
-
+    // Get the div, and remove it
+    let row = document.getElementById("product" + event.id)
+    row.remove()
     axios.post(baseUrl +'/orders/cart/remove',{id: event.id})
         .then(function (res){
-            let row = document.getElementById("row" + event.id)
-            row.remove()
             getCartNumber()
             getCartTotal()
 
         })
         .catch(function(err){
-           console.log(error)
+           console.log(err);
         });
 
 }
@@ -344,7 +344,7 @@ function AddManyToCart(event){
 // Quantity functionality
 
 
-$('.btn-number').click(function(e){
+$('.prod-details-incr').click(function(e){
     e.preventDefault();
 
     fieldName = $(this).attr('data-field');
@@ -375,10 +375,10 @@ $('.btn-number').click(function(e){
         input.val(0);
     }
 });
-$('.input-number').focusin(function(){
+$('.prod-details-amount').focusin(function(){
    $(this).data('oldValue', $(this).val());
 });
-$('.input-number').change(function() {
+$('.prod-details-amount').change(function() {
 
     minValue =  parseInt($(this).attr('min'));
     maxValue =  parseInt($(this).attr('max'));
@@ -400,7 +400,7 @@ $('.input-number').change(function() {
 
 
 });
-$(".input-number").keydown(function (e) {
+$(".prod-details-amount").keydown(function (e) {
         // Allow: backspace, delete, tab, escape, enter and .
         if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
              // Allow: Ctrl+A
@@ -415,6 +415,77 @@ $(".input-number").keydown(function (e) {
             e.preventDefault();
         }
     });
+
+
+
+
+
+
+
+
+// functionality for plus and minus in cart
+
+function incrementQuantity(ev){ // increment the item in cart by one
+    let parentDiv = ev.parentNode.parentNode;
+    let currentAmount = parentDiv.querySelector('p').innerHTML;
+    let productPrice = parentDiv.id;
+    let currentPrice = document.getElementById('current-item-price' + ev.id).innerHTML;
+    let cartTotal = document.getElementById('cart-total').innerText;
+    let maxValue = parentDiv.querySelector('p').getAttribute('max');
+
+    // Increment the html tag by 1
+    parentDiv.querySelector('p').innerHTML = (parseInt(currentAmount) + 1).toString();
+    currentAmount = parentDiv.querySelector('p').innerHTML
+
+    if(parseInt(currentAmount) > parseInt(maxValue)){ // maximum value
+        parentDiv.querySelector('p').innerHTML = maxValue.toString()
+        alert('Sorry the maximum value was reached')
+        return;
+    }
+
+    // Check if the html tag has reached it max value or not, if so then throw alert and back out of the process
+
+    addOneToCart(ev);
+
+    // Increment the price of the item by 1 product
+    let updatedPrice = parseInt(currentPrice) + parseInt(productPrice) + ' isk';
+    document.getElementById('current-item-price' + ev.id).innerHTML = updatedPrice;
+
+    let updatedCartTotal = parseInt(cartTotal) + parseInt(productPrice);
+    document.getElementById('cart-total').innerText = updatedCartTotal + ' isk'
+
+
+}
+
+function decrementQuantity(ev){ // decrement the item in cart by one
+    let parentDiv = ev.parentNode.parentNode;
+    let currentAmount = parentDiv.querySelector('p').innerHTML;
+    let productPrice = parentDiv.id;
+    let currentPrice = document.getElementById('current-item-price' + ev.id).innerHTML;
+    let cartTotal = document.getElementById('cart-total').innerText;
+    let minValue = parentDiv.querySelector('p').getAttribute('min');
+
+
+
+    // Decrement the html tag by 1
+    parentDiv.querySelector('p').innerHTML = (parseInt(currentAmount) - 1).toString();
+    currentAmount = parentDiv.querySelector('p').innerHTML
+
+    if(parseInt(currentAmount) < parseInt(minValue)){ // minimum value value
+        deleteFromCart(ev);
+        return;
+    }
+
+    // Increment the price of the item by 1 product
+    let updatedPrice = parseInt(currentPrice) - parseInt(productPrice) + ' isk';
+    document.getElementById('current-item-price' + ev.id).innerHTML = updatedPrice;
+
+    let updatedCartTotal = parseInt(cartTotal) - parseInt(productPrice);
+    document.getElementById('cart-total').innerText = updatedCartTotal + ' isk'
+}
+
+
+
 
 
 

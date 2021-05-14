@@ -242,8 +242,6 @@ def confirm(request):
                     MailService().order_completed(u.id)
                     return HttpResponse(status=201)
     return HttpResponse(status=402)
-
-
 def gratz(request):
     return render(request, 'order/order_complete.html')
 

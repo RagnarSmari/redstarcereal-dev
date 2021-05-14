@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
 class Manufacturer(models.Model):
@@ -24,6 +26,19 @@ class Product(models.Model):
     def first_image(self):
         return ProductGallery.objects.filter(product_id=self.id).first().image
 
+    @property
+    def rating(self):
+        if Review.objects.filter(product=self.id).exists():
+            return round(Review.objects.filter(product=self.id).aggregate(models.Avg('rating'))['rating__avg'], 1)
+        else:
+            return None
+
+    @property
+    def rating_count(self):
+        if Review.objects.filter(product=self.id).exists():
+            return Review.objects.filter(product=self.id).aggregate(models.Count('rating'))['rating__count']
+        else:
+            return 0
 
 class NutritionalInfo(models.Model):
     product_id = models.OneToOneField(Product, on_delete=models.CASCADE, primary_key=True)
@@ -41,6 +56,21 @@ class ProductGallery(models.Model):
     image = models.CharField(max_length=255)
     def __str__(self):
         return self.image
+
+
+
+class Review(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    rating = models.IntegerField(validators=[MaxValueValidator(5), MinValueValidator(1)])
+    title = models.CharField(max_length=50)
+    review = models.TextField()
+    created = models.DateField(auto_now_add=True)
+    last_modified = models.DateField(auto_now=True)
+
+    class Meta:
+        unique_together = ['product', 'user']
+
 
 
 
