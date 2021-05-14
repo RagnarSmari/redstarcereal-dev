@@ -83,10 +83,11 @@ def search_products(request):
         item['first_image'] = ProductGallery.objects.filter(product_id=item['id']).first().image
     return JsonResponse(context, safe=False)\
 
-@login_required
+
 def review_product(request, product_id):
-    u_id = User.objects.get(username=request.user)
+
     if request.method == 'POST':
+        u_id = User.objects.get(username=request.user)
         review_form = ReviewForm(request.POST)
         if review_form.is_valid():
 
@@ -104,6 +105,12 @@ def review_product(request, product_id):
                 return redirect('home')
 
     else:
+        print("hey")
+        if not request.user.is_authenticated:
+            messages.warning(request, 'You need to be logged in to make a review')
+            return redirect('login')
+
+        u_id = User.objects.get(username=request.user)
         if Review.objects.get(user_id=u_id, product_id=product_id):
             rev = Review.objects.get(user_id=u_id, product_id=product_id)
             review_form = ReviewForm(initial={
