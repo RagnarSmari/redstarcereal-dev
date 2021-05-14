@@ -101,10 +101,11 @@ def items_in_cart(request):
     if request.method == 'GET':
         if request.user.is_authenticated:
             u_id = get_user_id(request)
-
             amount = Cart.objects.filter(user_id=u_id).aggregate(Sum('amount'))['amount__sum']
-            print("say whay")
             return HttpResponse(amount)
+
+        else:
+            return HttpResponse('')
 
 
 

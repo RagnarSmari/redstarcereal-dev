@@ -75,13 +75,19 @@ def search_products(request):
         sort_param = 'id'
     if 'tag' in request.GET:
         tag = request.GET['tag']
-        context = list(Product.objects.filter(name__icontains=keyword).filter(categories__category__icontains=tag).order_by(sort_param).values())
+        context = {
+            'products': Product.objects.filter(name__icontains=keyword).filter(categories__category__icontains=tag).order_by(sort_param),
+            'categories': Category.objects.all()
+        }
     else:
-        context = list(Product.objects.filter(name__icontains=keyword).order_by(sort_param).values())
+        context = {
+            'products': Product.objects.filter(name__icontains=keyword).order_by(sort_param),
+            'categories': Category.objects.all()
+        }
 
-    for item in context:
-        item['first_image'] = ProductGallery.objects.filter(product_id=item['id']).first().image
-    return JsonResponse(context, safe=False)\
+    print(context)
+
+    return render(request, 'home/home.html', context)
 
 @login_required
 def review_product(request, product_id):

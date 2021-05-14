@@ -41,7 +41,10 @@ def success(request):
 
 def search_history(request):
     user = User.objects.get(username=request.user)
-    history = list(Search.objects.filter(user=user).order_by('-timestamp').values('keyword', 'id'))
-    print(history)
-    return JsonResponse(history, safe=False)
+    if user.is_authenticated:
+        history = list(Search.objects.filter(user=user).order_by('-timestamp').values('keyword', 'id'))
+        print(history)
+        return JsonResponse(history, safe=False)
+    else:
+        return JsonResponse([], safe=False)
 

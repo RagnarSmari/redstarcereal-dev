@@ -118,29 +118,17 @@ $('.form-control').keypress(function (event){
    if (event.keyCode == 13){
        event.preventDefault();
        let keyword = $(this).val();
-       let filter = {
-           'keyword': keyword
-       };
+       console.log(keyword);
+       let url = baseUrl + '/search?keyword=' + keyword;
        if (tagStr !== '') {
-           filter['tag'] = tagStr.split('=')[1];
+           url += '&' + tagStr
        }
        if (orderStr !== '') {
-           filter['tag'] = orderStr.split('=')[1];
+            url += '&' + orderStr
        }
-       $.ajax({
-           url: baseUrl + '/search',
-           type: 'GET',
-           data: filter,
-           dataType: 'json',
-           success: function (res){
-               let newHTML = res.map(d => {
-                    return templateString(d)
-                });
-                $('#product-row').html(newHTML.join(''));
-           }
-       });
-
-
+       console.log(url)
+       location.href = url
+       return;
    };
 });
 
