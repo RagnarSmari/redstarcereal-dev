@@ -1,4 +1,5 @@
 from django.core.mail import send_mail
+from django.contrib.auth.models import User
 
 
 
@@ -9,6 +10,11 @@ If you get in trouble you can always contact us on http://127.0.0.1:8000/home/co
     
 Happy shopping!
 """
+ORDER_MAIL = """We recived your order and are now working on shipping it to you as fast as possible!!
+
+Your favorite online cereal shop,
+Red Star Cereal!"""
+
 
 class MailService:
 
@@ -20,4 +26,11 @@ class MailService:
             'redstarcereal@gmail.com',
             [email],
             fail_silently=False
+        )
+    def order_completed(self,id):
+        send_mail(
+            'Order confirmed!',
+            ORDER_MAIL,
+            'redstarcereal@gmail.com',
+            [User.objects.get(id=id).email]
         )

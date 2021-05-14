@@ -437,7 +437,7 @@ function incrementQuantity(ev){ // increment the item in cart by one
     addOneToCart(ev);
     // update the price
      let currPrice = document.getElementById('current-item-price');
-     
+
 
 
 }

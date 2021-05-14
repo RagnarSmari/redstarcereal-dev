@@ -4,12 +4,13 @@ from django.contrib.auth.models import User
 import order.models
 from .models import Cart, ContactInfo, PaymentInfo, Order, OrderRow
 from product.models import Product
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseForbidden
 from django.contrib import messages
 from django.db.models import Sum
 from django.views.decorators.csrf import csrf_exempt
 import json
 from .forms import ContactInfoForm, PaymentForm
+from redstarcereal.mail_service import MailService
 from django_countries.fields import CountryField
 
 
@@ -41,6 +42,9 @@ def add_to_cart(request):
                 c = Cart(user_id=u_id, product_id=p_id, amount=amt)
                 c.save()
 
+            if ContactInfo.objects.filter(user_id=u_id, archived=False):
+                reset_order(request)
+
             return HttpResponse(status=201)
 
 
@@ -68,7 +72,7 @@ def update_cart(request):
 
 @csrf_exempt
 def delete_from_cart(request):
-    print("1")
+
     if request.method == 'POST':
         print(request.body)
         decoding = request.body.decode('utf-8')
@@ -81,6 +85,9 @@ def delete_from_cart(request):
             p_id = body['id']
             u_id = get_user_id(request)
             Cart.objects.get(user_id=u_id, product_id=p_id).delete()
+
+            if ContactInfo.objects.filter(user_id=u_id, archived=False):
+                reset_order(request)
 
             return HttpResponse(status=201)
 
@@ -135,16 +142,41 @@ def get_user_total(u_id):
 
 def contact_step(request):
 
+    id = get_user_id(request)
+
 
     if request.method == 'POST':
-        form = ContactInfoForm(request.POST)
-        if form.is_valid():
-            contact = form.save(commit=False)
-            user = User.objects.get(username=request.user)
-            contact.user = user
-            contact.save()
+
+        if ContactInfo.objects.filter(user_id=id, archived=False):
+
+            info = ContactInfo.objects.filter(user_id=id, archived=False).get()
+
+            form = ContactInfoForm(request.POST, instance=info)
+            form.save()
             return redirect('payment')
 
+        else:
+            form = ContactInfoForm(request.POST)
+            if form.is_valid():
+                contact = form.save(commit=False)
+                user = User.objects.get(username=request.user)
+                contact.user = user
+                contact.save()
+                return redirect('payment')
+
+    if ContactInfo.objects.filter(user_id=id, archived=False):
+        info = ContactInfo.objects.filter(user_id=id, archived=False).get()
+        form = ContactInfoForm(initial={
+            'first_name': info.first_name,
+            'last_name': info.last_name,
+            'email': info.email,
+            'street': info.street,
+            'house_number': info.house_number,
+            'city': info.city,
+            'country': info.country,
+            'postal_code': info.postal_code
+        })
+        return render(request, 'order/contact_information.html', {'form': form})
 
 
 
@@ -153,7 +185,30 @@ def contact_step(request):
 
 
 def payment(request):
+    id = get_user_id(request)
+
+    if not ContactInfo.objects.filter(user_id=id, archived=False):
+        return HttpResponseForbidden()
+
+    if PaymentInfo.objects.filter(user_id=id, archived=False):
+        payment = PaymentInfo.objects.filter(user_id=id, archived=False).get()
+        form = PaymentForm(initial={
+            'card_holder': payment.card_holder,
+            'cc_number': payment.cc_number,
+            'cc_expiry': payment.cc_expiry,
+        })
+        return render(request,'order/payment.html', {'form': form})
+
+
     if request.method == 'POST':
+        if PaymentInfo.objects.filter(user_id=id, archived=False):
+
+            payment = PaymentInfo.objects.filter(user_id=id, archived=False).get()
+
+            form = PaymentForm(request.POST, instance=payment)
+            form.save()
+            return redirect('review')
+
         form = PaymentForm(request.POST)
         if form.is_valid():
             payment = form.save(commit=False)
@@ -162,10 +217,10 @@ def payment(request):
             payment.save()
             return redirect('review')
 
-
-
     form  = PaymentForm()
     return render(request,'order/payment.html', {'form': form})
+
+
 
 def review(request):
     u = User.objects.get(username=request.user)
@@ -184,9 +239,9 @@ def confirm(request):
         if Cart.objects.filter(user_id=u.id) and ContactInfo.objects.filter(archived=False).get(user=u):
             if PaymentInfo.objects.filter(archived=False).get(user=u):
                 if cart_to_order(u):
+                    MailService.order_completed(u.id)
                     return HttpResponse(status=201)
     return HttpResponse(status=402)
-
 def gratz(request):
     return render(request, 'order/order_complete.html')
 
@@ -218,6 +273,16 @@ def cart_to_order(user):
     payment_model.save()
 
     return True
+
+
+def reset_order(req):
+    id = get_user_id(req)
+    c_row = ContactInfo.objects.filter(user_id=id, archived=False).get()
+    c_row.delete()
+    if PaymentInfo.objects.filter(user_id=id, archived=False):
+        p_row = PaymentInfo.objects.filter(user_id=id, archived=False).get()
+        p_row.delete()
+
 
 
 #TODO ef hann er með contact info þá uppfæra það. og auto filla það þegar hann fer í contact info, sama með payment
