@@ -90,7 +90,6 @@ def review_product(request, product_id):
                 rev = review_form.save(commit=False)
                 rev.product_id = product_id
                 rev.user_id = User.objects.get(username=request.user).id
-                print(rev)
                 rev.save()
                 messages.success(request, 'Your review has been added')
                 return redirect('home')

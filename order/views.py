@@ -103,31 +103,26 @@ def items_in_cart(request):
             u_id = get_user_id(request)
 
             amount = Cart.objects.filter(user_id=u_id).aggregate(Sum('amount'))['amount__sum']
-
+            print("say whay")
             return HttpResponse(amount)
-        else:
-            print('Hæ þú ert í cart count')
-            cart = json.loads(request.COOKIES['cart'])
-            total = 0
-            for _item, amt in cart.items():
-                total += amt
-            print(total)
-            return HttpResponse(total)
+
 
 
 
 def view_cart(request):
-    u_id = get_user_id(request)
-    print(u_id)
-    context = {
-        'cart': list(Cart.objects.filter(user_id=u_id).values()),
-    }
-    for item in context['cart']:
-        item['product'] = Product.objects.get(pk=item['product_id'])
-        item['price'] = item['product'].price * item['amount']
-    context['total'] = get_user_total(u_id)
 
-    return render(request, 'order/cart.html', context)
+    if request.user.is_authenticated:
+        u_id = get_user_id(request)
+        context = {
+            'cart': list(Cart.objects.filter(user_id=u_id).values()),
+        }
+        for item in context['cart']:
+            item['product'] = Product.objects.get(pk=item['product_id'])
+            item['price'] = item['product'].price * item['amount']
+        context['total'] = get_user_total(u_id)
+
+        return render(request, 'order/cart.html', context)
+    return redirect('login')
 
 
 def get_cart_total(request):
@@ -144,6 +139,9 @@ def get_user_total(u_id):
 
 
 def contact_step(request):
+
+    if not request.user.is_authenticated:
+        return redirect('login')
 
     id = get_user_id(request)
 
@@ -192,6 +190,9 @@ def contact_step(request):
 
 
 def payment(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+
     id = get_user_id(request)
 
     if not ContactInfo.objects.filter(user_id=id, archived=False):
@@ -203,6 +204,7 @@ def payment(request):
             'card_holder': payment.card_holder,
             'cc_number': payment.cc_number,
             'cc_expiry': payment.cc_expiry,
+            
         })
         return render(request,'order/payment.html', {'form': form})
 
@@ -231,6 +233,9 @@ def payment(request):
 
 def review(request):
 
+    if not request.user.is_authenticated:
+        return redirect('login')
+
 
     u = User.objects.get(username=request.user)
 
@@ -248,6 +253,10 @@ def review(request):
 
 @csrf_exempt
 def confirm(request):
+
+    if not request.user.is_authenticated:
+        return redirect('login')
+
     if request.method == 'POST':
         u = User.objects.get(username=request.user)
         if Cart.objects.filter(user_id=u.id) and ContactInfo.objects.filter(archived=False).get(user=u):
@@ -256,6 +265,8 @@ def confirm(request):
                     MailService().order_completed(u.id)
                     return HttpResponse(status=201)
     return HttpResponse(status=402)
+
+
 def gratz(request):
     return render(request, 'order/order_complete.html')
 
