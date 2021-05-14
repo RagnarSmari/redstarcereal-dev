@@ -144,6 +144,10 @@ def contact_step(request):
 
     id = get_user_id(request)
 
+    if not Cart.objects.filter(user_id=id):
+        messages.warning(request,'Your cart is empty. You can not go to checkout an empty cart.')
+        return redirect('home')
+
 
     if request.method == 'POST':
 
@@ -223,7 +227,14 @@ def payment(request):
 
 
 def review(request):
+
+
     u = User.objects.get(username=request.user)
+
+    if not PaymentInfo.objects.filter(user_id=u, archived=False):
+        messages.warning(request, 'This is not allowed. Go to your cart and start the checkout from there.')
+        return redirect('home')
+
     context = {
         'customer': ContactInfo.objects.filter(archived=False).get(user=u),
         'payment': PaymentInfo.objects.filter(archived=False).get(user=u),
