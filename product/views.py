@@ -64,7 +64,7 @@ def product_filter_and_manufacturer(request, id):
 
 def search_products(request):
     keyword = request.GET['keyword']
-    print(keyword)
+
     if request.user.is_authenticated:
         user = User.objects.get(username=request.user)
         _s, _created = Search.objects.update_or_create(keyword=keyword, user=user)

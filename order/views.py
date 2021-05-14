@@ -239,7 +239,7 @@ def confirm(request):
         if Cart.objects.filter(user_id=u.id) and ContactInfo.objects.filter(archived=False).get(user=u):
             if PaymentInfo.objects.filter(archived=False).get(user=u):
                 if cart_to_order(u):
-                    MailService.order_completed(u.id)
+                    MailService().order_completed(u.id)
                     return HttpResponse(status=201)
     return HttpResponse(status=402)
 def gratz(request):
