@@ -223,7 +223,7 @@
                         <div class="review border">
                             <span class="">{{ review.user }} - {{ review.created }}</span>
                             <br>
-                            {% if product.rating >= 4.5 %}
+                            {% if review.rating >= 4.5 %}
 
                                 <span class="fa fa-star checked"></span>
                                 <span class="fa fa-star checked"></span>
@@ -231,7 +231,7 @@
                                 <span class="fa fa-star checked"></span>
                                 <span class="fa fa-star checked"></span>
 
-                            {% elif product.rating >= 3.5 %}
+                            {% elif review.rating >= 3.5 %}
 
                                 <span class="fa fa-star checked"></span>
                                 <span class="fa fa-star checked"></span>
@@ -239,7 +239,7 @@
                                 <span class="fa fa-star checked"></span>
                                 <span class="fa fa-star"></span>
 
-                            {% elif product.rating >= 2.5 %}
+                            {% elif review.rating >= 2.5 %}
 
                                 <span class="fa fa-star checked"></span>
                                 <span class="fa fa-star checked"></span>
@@ -247,7 +247,7 @@
                                 <span class="fa fa-star"></span>
                                 <span class="fa fa-star"></span>
 
-                            {% elif product.rating >= 1.5 %}
+                            {% elif review.rating >= 1.5 %}
 
                                 <span class="fa fa-star checked"></span>
                                 <span class="fa fa-star checked"></span>
@@ -256,7 +256,7 @@
                                 <span class="fa fa-star"></span>
 
 
-                            {% elif product.rating >= 0.5 %}
+                            {% elif review.rating >= 0.5 %}
 
                                 <span class="fa fa-star"></span>
                                 <span class="fa fa-star"></span>
