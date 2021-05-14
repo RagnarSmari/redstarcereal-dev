@@ -67,7 +67,8 @@ def search_products(request):
 
     if request.user.is_authenticated:
         user = User.objects.get(username=request.user)
-        _s, _created = Search.objects.update_or_create(keyword=keyword, user=user)
+        if '<' not in keyword:
+            _s, _created = Search.objects.update_or_create(keyword=keyword, user=user)
     if 'order_by' in request.GET:
         sort_param = request.GET['order_by']
     else:
@@ -84,15 +85,33 @@ def search_products(request):
 
 @login_required
 def review_product(request, product_id):
-        if request.method == 'POST':
-            review_form = ReviewForm(request.POST)
-            if review_form.is_valid():
+    u_id = User.objects.get(username=request.user)
+    if request.method == 'POST':
+        review_form = ReviewForm(request.POST)
+        if review_form.is_valid():
+
+            if Review.objects.get(user_id=u_id, product_id=product_id):
+                info = Review.objects.get(user_id=u_id, product_id=product_id)
+                form = ReviewForm(request.POST, instance=info)
+                form.save()
+                return redirect('home')
+            else:
                 rev = review_form.save(commit=False)
                 rev.product_id = product_id
                 rev.user_id = User.objects.get(username=request.user).id
                 rev.save()
                 messages.success(request, 'Your review has been added')
                 return redirect('home')
+
+    else:
+        if Review.objects.get(user_id=u_id, product_id=product_id):
+            rev = Review.objects.get(user_id=u_id, product_id=product_id)
+            review_form = ReviewForm(initial={
+                'title': rev.title,
+                'rating': rev.rating,
+                'review': rev.review
+            }
+            )
         else:
             review_form = ReviewForm()
 
@@ -101,6 +120,6 @@ def review_product(request, product_id):
             'product': Product.objects.get(pk=product_id)
         }
 
-        return render(request, 'products/review.html', context)
+    return render(request, 'products/review.html', context)
 
 
