@@ -252,7 +252,6 @@ function deleteFromCart(event) {
         .then(function (res){
             getCartNumber()
             getCartTotal()
-
         })
         .catch(function(err){
            console.log(err);
@@ -426,7 +425,6 @@ function decrementQuantity(ev){ // decrement the item in cart by one
     currentAmount = parentDiv.querySelector('span').innerHTML
 
     // Delete one from cart
-    deleteOneFromCart(ev);
     if(parseInt(currentAmount) < parseInt(minValue)){ // minimum value value
         deleteFromCart(ev);
         return;

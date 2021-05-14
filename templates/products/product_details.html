@@ -22,7 +22,6 @@
                                   </div>
                               {% endif %}
                           {% endfor %}
-                      </div>
                       <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Previous</span>
@@ -34,6 +33,46 @@
                     </div>
                 </div> <!-- slider-product.// -->
                 </article> <!-- gallery-wrap .end// -->
+                <div align="center">
+                    <div align="center">
+                        {% for cat in categories %}
+                            <span class="badge badge-pill badge-info" style="background-color: darkred;">{{ cat }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <br>
+            <table class="table m-top-25">
+                  <thead>
+                    <tr>
+                        <th scope="col">Nutrition</th>
+                        <th scope="col">Per 100g</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">Calories:</th>
+                      <td>{{ nutrition.calories }}g</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Fat:</th>
+                      <td>{{ nutrition.fat }}g</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Carbs:</th>
+                      <td colspan="2">{{ nutrition.carbs }}g</td>
+                    </tr>
+                    <tr>
+                      <th scope="row" class="text-muted fw-normal">of which sugar:</th>
+                      <td colspan="2">{{ nutrition.sugar }}g</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Protein:</th>
+                      <td colspan="2">{{ nutrition.protein }}g</td>
+                    </tr>
+                  </tbody>
+                </table>
+
             </aside>
         <aside class="col-sm-12 col-md-7 col-lg-7 col-xl-5 col-xxl-5">
             <article class="card-body p-5">
@@ -50,8 +89,8 @@
 
             </p> <!-- rating wrap .// -->
             {% if product.rating != None %}
-            <p class="rating-wrap">
-                <span class="price h3 text-warning text-body">
+                <p class="rating-wrap"></p>
+                <span class="price h3 text-warning text-body"></span>
                 <p>{{ product.rating }} ({{ product.rating_count }})</p>
 
                 {% if product.rating >= 4.5 %}
@@ -130,44 +169,10 @@
                 <dd>{{ manufacturer.name }}</dd>
             </dl>  <!-- item-property-hor .// -->
              <dl class="item-property">
-                <table class="table">
-                  <thead>
-                    <tr>
-                        <th scope="col">Nutrition</th>
-                        <th scope="col">Per 100g</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th scope="row">Calories:</th>
-                      <td>{{ nutrition.calories }}g</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Fat:</th>
-                      <td>{{ nutrition.fat }}g</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Carbs:</th>
-                      <td colspan="2">{{ nutrition.carbs }}g</td>
-                    </tr>
-                    <tr>
-                      <th scope="row" class="text-muted fw-normal">of which sugar:</th>
-                      <td colspan="2">{{ nutrition.sugar }}g</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Protein:</th>
-                      <td colspan="2">{{ nutrition.protein }}g</td>
-                    </tr>
-                  </tbody>
-                </table>
+
             </dl>
             <dl class="param param-feature">
-                <dt>Categories</dt>
-                <ul class="list-group">
-                    {% for cat in categories %}
-                        <li class="list-group-item">{{cat}}</li>
-                    {% endfor %}
-                </ul>
+
             </dl>  <!-- item-property-hor .// -->
 
             <hr>
@@ -207,14 +212,68 @@
                 </a>
 
                 <div class="review-container">
+                    <h3>Reviews</h3>
                     {% for review in reviews %}
-                        <div class="review">
-                            <h3>{{ review.title }}</h3>
-                            <p>Rating: {{ review.rating }}</p>
-                            <p>Review: {{ review.review }}</p>
+                        <div class="review border">
+                            <span class="">{{ review.user }} - {{ review.created }}</span>
+                            <br>
+                            {% if product.rating >= 4.5 %}
+
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+
+                            {% elif product.rating >= 3.5 %}
+
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star"></span>
+
+                            {% elif product.rating >= 2.5 %}
+
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
+
+                            {% elif product.rating >= 1.5 %}
+
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
+
+
+                            {% elif product.rating >= 0.5 %}
+
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
+
+
+                            {% else %}
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
+
+                            {% endif %}
+                            <br>
+                            <h5 class="border-bottom">{{ review.title }}</h5>
+                            <p>{{ review.review }}</p>
                         </div>
                     {% endfor %}
                 </div>
+
             </article> <!-- card-body.// -->
             </aside> <!-- col.// -->
         </div> <!-- row.// -->
