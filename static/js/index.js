@@ -114,9 +114,6 @@ function templateString(d) {
 }
 
 // Search bar
-
-
-
 $('.form-control').keypress(function (event){
    if (event.keyCode == 13){
        event.preventDefault();
@@ -137,42 +134,7 @@ $('.form-control').keypress(function (event){
            dataType: 'json',
            success: function (res){
                let newHTML = res.map(d => {
-                    return `
-                           <div class="product top-buffer col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 border" id="single-prod">
-                             <a href="../products/${d.id}" class="text-decoration-none">
-                                <div class="shop-default shop-cards shop-tech">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="block product border z-depth-2-top z-depth-2--hover">
-                                                <div class="block-image">
-                                                        <img src="${d.first_image}" class="img-center">
-                                                </div>
-                                                <div class="block-body text-center">
-                                                    <h3 class="heading heading-5 strong-600 text-capitalize">
-                                                        ${d.name}
-                                                    </h3>
-                                                    <p class="product-description">
-                                                        ${d.weight} g
-                                                    </p>
-                                                    <p class="product-price">${d.price} ISK</p>
-                                                    <div class="product-buttons mt-4">
-                                                        <div class="row align-items-center">
-                                                            <div class="col-2">
-                                                            </div>
-                                                            <div class="col-8">
-                                                                <button type="button" class="btn btn-block btn-primary btn-circle btn-icon-left">
-                                                                    <i class="fa fa-shopping-cart"></i>Add to cart
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>`
+                    return templateString(d)
                 });
                 $('#product-row').html(newHTML.join(''));
            }
