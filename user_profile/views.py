@@ -34,8 +34,6 @@ def profile_page(request):
         'user_form': user_form,
         'profile_from': profile_form
     }
-
-
     return render(request, 'home/profile_page.html', context)
 
 
@@ -44,7 +42,10 @@ def success(request):
 
 def search_history(request):
     user = User.objects.get(username=request.user)
-    history = list(Search.objects.filter(user=user).order_by('-timestamp').values('keyword', 'id'))
-    print(history)
-    return JsonResponse(history, safe=False)
+    if user.is_authenticated:
+        history = list(Search.objects.filter(user=user).order_by('-timestamp').values('keyword', 'id'))
+        print(history)
+        return JsonResponse(history, safe=False)
+    else:
+        return JsonResponse([], safe=False)
 

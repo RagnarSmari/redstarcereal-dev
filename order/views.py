@@ -101,10 +101,14 @@ def items_in_cart(request):
     if request.method == 'GET':
         if request.user.is_authenticated:
             u_id = get_user_id(request)
-
             amount = Cart.objects.filter(user_id=u_id).aggregate(Sum('amount'))['amount__sum']
+            if amount != None:
+                return HttpResponse(amount)
+            else:
+                return HttpResponse('')
 
-            return HttpResponse(amount)
+        else:
+            return HttpResponse('')
 
 
 
@@ -183,8 +187,6 @@ def contact_step(request):
         })
         return render(request, 'order/contact_information.html', {'form': form})
 
-
-
     form = ContactInfoForm()
     return render(request, 'order/contact_information.html', {'form': form})
 
@@ -225,11 +227,9 @@ def payment(request):
         })
         return render(request,'order/payment.html', {'form': form})
 
+    form = PaymentForm()
 
-
-
-    form  = PaymentForm()
-    return render(request,'order/payment.html', {'form': form})
+    return render(request, 'order/payment.html', {'form': form})
 
 
 
@@ -309,13 +309,4 @@ def reset_order(req):
     if PaymentInfo.objects.filter(user_id=id, archived=False):
         p_row = PaymentInfo.objects.filter(user_id=id, archived=False).get()
         p_row.delete()
-
-
-
-
-#TODO setja hlekki til að fara fram og til baka
-
-#TODO Tjékka hvort allt sé til áður en þú setur í cart B-KRAFA
-
-
 

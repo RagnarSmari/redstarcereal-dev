@@ -44,7 +44,7 @@ def contact(request):
         messages.error(request, "Error. Message not sent.")
 
     form = ContactForm()
-    return render(request, 'home/contact.html', {'form':form})
+    return render(request, 'home/contact.html', {'form': form})
 
 
 def products(request):
